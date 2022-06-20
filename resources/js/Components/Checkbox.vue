@@ -1,7 +1,7 @@
 <script>
 export default {
     props: {
-        value: {
+        modelValue: {
             type: Boolean,
             default: false
         },
@@ -10,11 +10,12 @@ export default {
             type: String,
             required: true
         }
-    }
+    },
+    emits: ['update:modelValue'],
 }
 </script>
 
 <template>
-    <input type="checkbox" :name="name" v-model="value" :id="id"
-           class="form-check-input">
+    <input type="checkbox" :name="name" :id="id"
+           class="form-check-input" @input="$emit('update:modelValue', $event.target.checked)">
 </template>

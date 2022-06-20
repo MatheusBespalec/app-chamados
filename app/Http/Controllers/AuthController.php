@@ -28,7 +28,6 @@ class AuthController extends Controller
      */
     public function signIn(LoginRequest $request)
     {
-        dd($request);
         $request->authenticate();
 
         $request->session()->regenerate();

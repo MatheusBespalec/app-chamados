@@ -1,0 +1,36 @@
+@import "../abstract/variables";
+
+.dash-box {
+    width: 225px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: $light-color;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+
+    .icon {
+        color: white;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        box-shadow: 0 7px 26px -8px rgba(0,0,0,0.75);
+    }
+
+    .info {
+        text-align: right;
+
+        h3 {
+            color: $color-text-disable;
+            font-size: $small-title-size * 0.8;
+            margin: 0;
+        }
+        span {
+            font-size: $medium-title-size;
+        }
+    }
+}

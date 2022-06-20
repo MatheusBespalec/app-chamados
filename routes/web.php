@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ErrorController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -23,12 +24,16 @@ Route::middleware('guest')->group(function () {
 
 // Private Routes
 Route::middleware('auth')->group(function () {
-    Route::post('logout', [AuthController::class, 'destroy'])->name('logout');
+    // Home
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
-});
 
-Route::get('/', function () {
-    return redirect()->route('dashboard');
+    // AuthController Routes
+    Route::post('logout', [AuthController::class, 'destroy'])->name('logout');
+
+    // Error Controller Routes
+    Route::controller(ErrorController::class)->name('error.')->group(function () {
+        Route::get('/erros', 'index')->name('index');
+    });
 });
