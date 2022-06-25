@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
 
     // AuthController Routes
-    Route::post('logout', [AuthController::class, 'destroy'])->name('logout');
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
     // Error Controller Routes
     Route::controller(ErrorController::class)->name('errors.')->group(function () {

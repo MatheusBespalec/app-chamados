@@ -95,7 +95,9 @@ export default {
                 </div>
             </div>
             <div class="icon">
-                <ExitIcon size="23" />
+                <Link :href="route('logout')"  method="post" as="button">
+                    <ExitIcon size="23" />
+                </Link>
             </div>
         </footer>
     </aside>

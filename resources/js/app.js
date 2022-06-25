@@ -16,7 +16,9 @@ createInertiaApp({
     //resolve: (name) => require(`./Pages/${name}.vue`),
     resolve: (name) => {
         const page = require(`./Pages/${name}`).default
-        page.layout = page.layout || Layout
+        if (page.__name != 'Login') {
+            page.layout = Layout
+        }
         return page
     },
     setup({ el, app, props, plugin }) {

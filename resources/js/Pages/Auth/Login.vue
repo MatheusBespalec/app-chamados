@@ -1,39 +1,39 @@
 <script setup>
-import Button from '@/Components/Button.vue';
-import Checkbox from '@/Components/Checkbox.vue';
-import Input from '@/Components/Input.vue';
-import Label from '@/Components/Label.vue';
-import { useForm } from '@inertiajs/inertia-vue3';
 
-const props = defineProps({
-    errors: Object,
-});
-const form = useForm({
-    email: '',
-    password: '',
-    remember: true
-})
-    //import { Toast } from 'bootstrap'
-    // const submit = () => {
-    //     form.post(route('signIn'), {
-    //         onError: () => {
-    //             let toastElList = [].slice.call(document.querySelectorAll('.toast'))
-    //             let toastList = toastElList.map(function(toastEl) {
-    //                 return new Toast(toastEl)
-    //             })
-    //             toastList.forEach(toast => toast.show())
-    //         },
-    //         onFinish: () => form.reset('password'),
-    //     });
-    // };
-const submit = () => {
-    form.post(route('signIn'), {
-        onFinish: () => {
-            form.reset('password')
-        },
+    import Button from '@/Components/Button.vue';
+    import Checkbox from '@/Components/Checkbox.vue';
+    import Input from '@/Components/Input.vue';
+    import Label from '@/Components/Label.vue';
+    import { useForm } from '@inertiajs/inertia-vue3';
+
+    const props = defineProps({
+        errors: Object,
     });
-};
-
+    const form = useForm({
+        email: '',
+        password: '',
+        remember: true
+    })
+        //import { Toast } from 'bootstrap'
+        // const submit = () => {
+        //     form.post(route('signIn'), {
+        //         onError: () => {
+        //             let toastElList = [].slice.call(document.querySelectorAll('.toast'))
+        //             let toastList = toastElList.map(function(toastEl) {
+        //                 return new Toast(toastEl)
+        //             })
+        //             toastList.forEach(toast => toast.show())
+        //         },
+        //         onFinish: () => form.reset('password'),
+        //     });
+        // };
+    const submit = () => {
+        form.post(route('signIn'), {
+            onFinish: () => {
+                form.reset('password')
+            },
+        });
+    };
 
 </script>
 
