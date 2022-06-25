@@ -14339,7 +14339,11 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-aside.menu {
+a {
+  text-decoration: none;
+}
+
+aside#menu {
   position: fixed;
   top: 0;
   left: 0;
@@ -14349,34 +14353,34 @@ aside.menu {
   height: 100vh;
   width: 270px;
 }
-aside.menu .top {
+aside#menu .top {
   padding: 20px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: #04aeab;
 }
-aside.menu .top h1, aside.menu .top .h1 {
+aside#menu .top h1, aside#menu .top .h1 {
   font-weight: lighter;
   font-size: 2rem;
 }
-aside.menu .top .menu-icon {
+aside#menu .top .menu-icon {
   cursor: pointer;
 }
-aside.menu h2, aside.menu .h2 {
+aside#menu h2, aside#menu .h2 {
   font-size: 1.5rem;
   font-weight: 300;
   margin: 8px 0 8px 15px;
 }
-aside.menu nav {
+aside#menu nav {
   margin-top: 40px;
   transition: 0.6s;
 }
-aside.menu nav ul {
+aside#menu nav ul {
   list-style: none;
   padding: 0;
 }
-aside.menu nav ul li {
+aside#menu nav ul li {
   display: flex;
   align-items: center;
   padding: 10px 0 10px 50px;
@@ -14387,32 +14391,34 @@ aside.menu nav ul li {
   cursor: pointer;
   color: #6e6e6e;
 }
-aside.menu nav ul li:hover {
+aside#menu nav ul li:hover {
   background: linear-gradient(90deg, rgba(4, 174, 171, 0.3) 15%, rgba(4, 174, 171, 0.1) 100%);
 }
-aside.menu nav ul li span {
+aside#menu nav ul li span {
   transition: 0.6s;
 }
-aside.menu nav ul li svg {
+aside#menu nav ul li svg {
   margin-right: 8px;
 }
-aside.menu nav ul .active {
+aside#menu nav ul .active {
   font-weight: 400;
   padding-left: 45px;
   color: white;
 }
-aside.menu nav ul .active span {
+aside#menu nav ul .active span {
   position: absolute;
   top: 30%;
   left: 0;
   width: 5px;
   height: 40%;
   background-color: #04aeab;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
-aside.menu nav ul .active svg {
+aside#menu nav ul .active svg {
   color: #04aeab;
 }
-aside.menu footer {
+aside#menu footer {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -14424,15 +14430,15 @@ aside.menu footer {
   padding: 0 30px;
   margin-bottom: 30px;
 }
-aside.menu footer .user {
+aside#menu footer .user {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-aside.menu footer .user * {
+aside#menu footer .user * {
   margin: 0;
 }
-aside.menu footer .user .img {
+aside#menu footer .user .img {
   height: 40px;
   width: 40px;
   background: gray;
@@ -14440,34 +14446,36 @@ aside.menu footer .user .img {
   overflow: hidden;
   margin-right: 10px;
 }
-aside.menu footer .user .info h4, aside.menu footer .user .info .h4 {
+aside#menu footer .user .info h4, aside#menu footer .user .info .h4 {
   font-size: 14px;
   padding: 5px 0;
 }
-aside.menu footer .user .info h5, aside.menu footer .user .info .h5 {
+aside#menu footer .user .info h5, aside#menu footer .user .info .h5 {
   font-size: 12px;
 }
-aside.menu footer .icon {
+aside#menu footer .icon {
   cursor: pointer;
   transition: 0.4s;
 }
-aside.menu footer .icon:hover {
+aside#menu footer .icon:hover {
   transform: translateX(3px);
 }
 
-.content {
+main {
   float: right;
   padding: 30px;
   background-color: #F6F7FA;
   min-height: 100vh;
   width: calc(100vw - 270px);
+  overflow: hidden;
 }
-.content main {
+main .content {
   margin-top: 30px;
   padding: 25px;
   background-color: #fff;
   border-radius: 20px;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+  overflow: hidden;
 }
 
 .dash-box {

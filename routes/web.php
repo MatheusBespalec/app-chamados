@@ -33,7 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthController::class, 'destroy'])->name('logout');
 
     // Error Controller Routes
-    Route::controller(ErrorController::class)->name('error.')->group(function () {
+    Route::controller(ErrorController::class)->name('errors.')->group(function () {
         Route::get('/erros', 'index')->name('index');
+        Route::get('/erros/{error}', 'show')->name('show');
     });
 });

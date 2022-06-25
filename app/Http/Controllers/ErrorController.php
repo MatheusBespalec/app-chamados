@@ -9,15 +9,6 @@ class ErrorController extends Controller
 {
     public function index()
     {
-        $headers = [
-            'ID',
-            'Código',
-            'Arquivo',
-            'Linha',
-            'Mensagem',
-            'Status',
-            'Ultima Ocorrência'
-        ];
         $errors = [
             [
                 'id' => 1,
@@ -39,6 +30,15 @@ class ErrorController extends Controller
             ],
         ];
 
-        return Inertia::render('Error/Index', compact('headers', 'errors'));
+        return Inertia::render('Error/Index', compact('errors'));
+    }
+
+    public function show()
+    {
+        $error = [
+            'id' => 1,
+            'message' => 'Teste'
+        ];
+        return Inertia::render('Error/Show', compact('error'));
     }
 }

@@ -4,7 +4,7 @@
 
 $footer-height: 40px;
 
-aside.menu {
+aside#menu {
     position: fixed;
     top: 0;
     left: 0;
@@ -80,6 +80,8 @@ aside.menu {
                     width: 5px;
                     height: 40%;
                     background-color: $secondary-color;
+                    border-top-right-radius: 5px;
+                    border-bottom-right-radius: 5px;
                 }
 
                 svg {
@@ -139,5 +141,23 @@ aside.menu {
                 transform: translateX(3px);
             }
         }
+    }
+}
+
+main {
+    float: right;
+    padding: 30px;
+    background-color: #F6F7FA;
+    min-height: 100vh;
+    width: calc(100vw - $menu-width);
+    overflow: hidden;
+
+    .content {
+        margin-top: 30px;
+        padding: 25px;
+        background-color: #fff;
+        border-radius: 20px;
+        box-shadow: 0 0 4px 0 rgba(0,0,0,0.2);
+        overflow: hidden;
     }
 }

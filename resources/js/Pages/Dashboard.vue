@@ -11,7 +11,7 @@ import MetricBox from '../Components/MetricBox';
             <DashboardIcon />
         </MetricBox>
 
-        <MetricBox bg="#4778B5" value="100" title="Texto de Titulo">
+        <MetricBox bg="#000" value="100" title="Texto de Titulo">
             <DashboardIcon />
         </MetricBox>
 

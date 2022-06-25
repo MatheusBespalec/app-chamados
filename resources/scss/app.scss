@@ -2,7 +2,9 @@
 @import "~bootstrap/scss/bootstrap";
 @import "animate.css";
 
+// Abstract
+@import "abstract/boot";
+
 // Components
-@import "components/menu";
-@import "components/page-wrapper";
+@import "components/auth-layout";
 @import "components/metric-box";
