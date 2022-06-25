@@ -37,7 +37,9 @@ class ErrorController extends Controller
     {
         $error = [
             'id' => 1,
-            'message' => 'Teste'
+            'message' => 'Undefined variable $teste',
+            'url' => 'http://teste.com/login',
+            'method' => 'POST'
         ];
         return Inertia::render('Error/Show', compact('error'));
     }

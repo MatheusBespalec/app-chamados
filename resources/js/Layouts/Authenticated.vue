@@ -63,7 +63,7 @@ export default {
                 </li>
 
                 <Link :href="route('errors.index')">
-                    <li id="error" @click="switchProject($event)">
+                    <li id="errors" @click="switchProject($event)">
                         <span></span>
                         <ErrorIcon size="16" />
                         Erros
@@ -95,7 +95,7 @@ export default {
                 </div>
             </div>
             <div class="icon">
-                <Link :href="route('logout')"  method="post" as="button">
+                <Link :href="route('logout')"  method="post" as="button" class="bg-none">
                     <ExitIcon size="23" />
                 </Link>
             </div>

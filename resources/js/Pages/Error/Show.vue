@@ -19,4 +19,19 @@ const breadcrumb = [
 
 <template>
     <Breadcrumb :items="breadcrumb" />
+
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <h1> Erro: {{ error.message }}</h1>
+            </div>
+            <div class="col-12">
+                <h2>Geral</h2>
+                <div class="row">
+
+                </div>
+            </div>
+        </div>
+
+    </section>
 </template>
