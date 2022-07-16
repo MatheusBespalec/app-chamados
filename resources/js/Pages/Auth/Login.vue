@@ -1,9 +1,9 @@
 <script setup>
 
-    import Button from '@/Components/Button.vue';
-    import Checkbox from '@/Components/Checkbox.vue';
-    import Input from '@/Components/Input.vue';
-    import Label from '@/Components/Label.vue';
+    import Button from '@/Components/Button';
+    import Checkbox from '@/Components/Form/Checkbox';
+    import Input from '@/Components/Form/Input';
+    import Label from '@/Components/Form/Label';
     import { useForm } from '@inertiajs/inertia-vue3';
 
     const props = defineProps({

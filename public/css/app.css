@@ -14509,3 +14509,9 @@ main .content {
 .dash-box .info span {
   font-size: 1.5rem;
 }
+
+.chat input[type=text]:focus {
+  outline: none;
+  box-shadow: none !important;
+  border: 1px solid #ccc !important;
+}

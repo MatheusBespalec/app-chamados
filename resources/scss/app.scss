@@ -2,9 +2,12 @@
 @import "~bootstrap/scss/bootstrap";
 @import "animate.css";
 
+
+
 // Abstract
 @import "abstract/boot";
 
 // Components
 @import "components/auth-layout";
 @import "components/metric-box";
+@import "components/chat";

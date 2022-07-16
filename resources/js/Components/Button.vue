@@ -18,7 +18,7 @@ export default {
 </script>
 
 <template>
-    <button :type="type" class="btn" :class="`btn-${color} ${classes} `">
+    <button :type="type" class="btn" :class="`btn-${color} ${classes}`">
         <slot />
     </button>
 </template>

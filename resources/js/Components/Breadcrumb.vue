@@ -10,7 +10,7 @@ const props = defineProps(['items']);
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li v-for="(item, index) in items" :key="index" class="breadcrumb-item" :class="items.length == (index + 1) ? 'active' : ''">
-                <Link v-if="item.route" :href="route(item.route)">{{ item.text }}</Link>
+                <Link v-if="item.route" :href="route(item.route, item.params)">{{ item.text }}</Link>
                 <a v-else :aria-current="items.length == (index + 1) ? 'page' : ''">{{ item.text }}</a>
             </li>
         </ol>

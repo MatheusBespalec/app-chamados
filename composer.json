@@ -1,8 +1,8 @@
 {
-    "name": "laravel/laravel",
+    "name": "consulting/gerenciador",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "Gerenciador de projetos CSCE",
+    "keywords": ["gerenciador", "consulting"],
     "license": "MIT",
     "require": {
         "php": "^8.0.2",

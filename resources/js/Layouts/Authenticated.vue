@@ -1,29 +1,31 @@
 <script setup>
 
-import MenuIcon from '../Icons/MenuIcon';
-import ExitIcon from '../Icons/ExitIcon';
-import SecurityIcon from '../Icons/SecurityIcon';
-import SettingIcon from '../Icons/SettingIcon';
-import ErrorIcon from '../Icons/ErrorIcon';
-import CallIcon from '../Icons/CallIcon';
-import { onMounted } from 'vue';
+import SecurityIcon from '@/Icons/SecurityIcon';
+import ProjectIcon from '@/Icons/ProjectIcon';
+import SettingIcon from '@/Icons/SettingIcon';
+import ErrorIcon from '@/Icons/ErrorIcon';
+import CallIcon from '@/Icons/CallIcon';
+import UsersIcon from '@/Icons/UsersIcon';
+import MenuIcon from '@/Icons/MenuIcon';
+import ExitIcon from '@/Icons/ExitIcon';
 import DashboardIcon from "@/Icons/DashboardIcon";
 import { Link } from '@inertiajs/inertia-vue3'
-
-function switchProject(event) {
-    $('.active').removeClass('active');
-    event.target.classList.add('active');
-}
+import { onMounted, onUpdated } from 'vue';
 
 onMounted(() => {
     const currentMenu = route().current().split('.')[0];
     $(`#${currentMenu}`).addClass('active');
 })
 
+onUpdated(() => {
+    const currentMenu = route().current().split('.')[0];
+    $('#menu .active').removeClass('active');
+    $(`#${currentMenu}`).addClass('active');
+})
+
 </script>
 
 <script>
-
 export default {
     methods: {
         menuToggle() {
@@ -49,36 +51,49 @@ export default {
         <nav>
             <ul>
                 <Link :href="route('dashboard')">
-                    <li id="dashboard" @click="switchProject($event)">
+                    <li id="dashboard">
                         <span></span>
                         <DashboardIcon size="16" />
                         Dashboard
                     </li>
                 </Link>
 
-                <li id="atack" @click="switchProject($event)">
-                    <span></span>
-                    <SecurityIcon size="16" />
-                    Ataques
-                </li>
+                <Link :href="route('attacks.index')">
+                    <li id="attacks">
+                        <span></span>
+                        <SecurityIcon size="16" />
+                        Ataques
+                    </li>
+                </Link>
 
                 <Link :href="route('errors.index')">
-                    <li id="errors" @click="switchProject($event)">
+                    <li id="errors">
                         <span></span>
                         <ErrorIcon size="16" />
                         Erros
                     </li>
                 </Link>
-                <li id="call" @click="switchProject($event)">
-                    <span></span>
-                    <CallIcon size="16" />
-                    Chamados
-                </li>
-                <li id="setting" @click="switchProject($event)">
-                    <span></span>
-                    <SettingIcon size="16" />
-                    Configurações
-                </li>
+                <Link :href="route('calls.index')">
+                    <li id="calls">
+                        <span></span>
+                        <CallIcon size="16" />
+                        Chamados
+                    </li>
+                </Link>
+                <Link :href="route('projects.index')">
+                    <li id="projects">
+                        <span></span>
+                        <ProjectIcon size="16" />
+                        Projetos
+                    </li>
+                </Link>
+                <Link :href="route('customers.index')">
+                    <li id="customers">
+                        <span></span>
+                        <UsersIcon size="16" />
+                        Clientes
+                    </li>
+                </Link>
             </ul>
         </nav>
 
@@ -95,7 +110,7 @@ export default {
                 </div>
             </div>
             <div class="icon">
-                <Link :href="route('logout')"  method="post" as="button" class="bg-none">
+                <Link :href="route('logout')"  method="post" class="text-light">
                     <ExitIcon size="23" />
                 </Link>
             </div>
