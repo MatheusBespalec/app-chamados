@@ -1,0 +1,9 @@
+.chat {
+    input[type="text"]:focus {
+        outline: none;
+        box-shadow:none !important;
+        border:1px solid #ccc !important;
+    }
+}
+
+
