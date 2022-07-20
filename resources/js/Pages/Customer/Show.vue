@@ -22,23 +22,22 @@ import { onMounted } from 'vue';
 
 let addProjectModal;
 let projects;
-const customer = usePage().props.value.customer;
 
 onMounted(() => {
     addProjectModal = new BoostrapModal(document.getElementById('add-project'));
 });
 
+const customer = usePage().props.value.customer;
 const openProjectsModal = () => {
     addProjectModal.show()
 };
-
 const form = useForm({
     project_id: 0,
     customer_id: customer.id,
 });
 const message = useForm({
-    file: null,
-    text: null
+    file: undefined,
+    text: undefined
 });
 
 const addProject = () => {
@@ -51,8 +50,12 @@ const addProject = () => {
 };
 
 const createNewMessage = () => {
-    message.post(route('customers.messages.store', { customer: customer.id }))
-    message.reset()
+    message.post(route('customers.messages.store', { customer: customer.id }), {
+        onSuccess() {
+            message.reset()
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+    })
 };
 
 const breadcrumb = [
@@ -106,7 +109,8 @@ const breadcrumb = [
             <ChatMessage
                 v-for="(message, index) in $page.props.customer.messages"
                 :key="index"
-                :text="message.file_path"
+                :text="message.text"
+                :file="message.file_path"
                 :color="message.user_id == $page.props.auth.user.id ? 'light' : 'secondary'"
                 :author="{ name: message.from }"
                 :classes="message.user_id == $page.props.auth.user.id
@@ -115,12 +119,19 @@ const breadcrumb = [
             />
 
             <div class="border rounded-circle">
-                <input class="form-control" type="file" @input="message.file = $event.target.files[0]">
+                <div class="mb-3">
+                    <input class="form-control" type="file" @input="message.file = $event.target.files[0]">
+                </div>
 
-                <div class="input-group mb-3 border rounded-circle">
+                <div class="mb-3 input-group">
                     <span class="input-group-text">Mensagem</span>
                     <textarea class="form-control" v-model="message.text" placeholder="Adicione uma mensagem ..."></textarea>
-                    <button class="btn btn-outline-primary" type="button" @click="createNewMessage"><SendIcon /></button>
+                </div>
+
+                <div class="mb-3">
+                    <button class="btn btn-outline-primary w-100" type="button" @click="createNewMessage">
+                        Salvar <SendIcon />
+                    </button>
                 </div>
             </div>
         </div><!-- col-12 -->

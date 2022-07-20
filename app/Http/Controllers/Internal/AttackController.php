@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Internal;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\AttackRequest;
 use App\Models\Attack;
 use App\Models\Customer;

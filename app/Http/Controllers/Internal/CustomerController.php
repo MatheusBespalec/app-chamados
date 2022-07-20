@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Internal;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerAttachProjectRequest;
 use App\Http\Requests\CustomerStoreRequest;
+use App\Http\Requests\MessageStoreRequest;
 use App\Models\Customer;
 use App\Models\CustomerProject;
 use App\Models\Project;
@@ -40,22 +42,15 @@ class CustomerController extends Controller
         return redirect()->route('customers.show', ['customer' => $customer->id]);
     }
 
-    public function projectsNotAttached(Customer $customer)
-    {
-        $attachedProjects = CustomerProject::query()->where('customer_id', $customer->id)->get(['id']);
-        ddd($attachedProjects);
-        Project::query()->where('id', 'not in', $attachedProjects);
-    }
-
     public function attachProject(Customer $customer, CustomerAttachProjectRequest $request)
     {
         $customer->projects()->attach($request->project_id, ['uuid' => Str::uuid()]);
         return redirect()->back()->with('success', 'Projeto adicionado!');
     }
 
-    public function addMessage(MessageRepository $repository, Customer $customer, Request $request)
+    public function storeMessage(MessageRepository $repository, Customer $customer, MessageStoreRequest $request)
     {
-        $repository->create($customer, $request?->text, $request?->file);
+        $repository->saveInternalMessage($customer, $request?->text, $request?->file);
         return redirect()->back();
     }
 }

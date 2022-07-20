@@ -1,16 +1,23 @@
 <script setup>
 
 import UserIcon from '@/Icons/UserIcon';
+import DowloadIcon from '@/Icons/DowloadIcon';
 
 const props = defineProps({
     text: String,
     author: Object,
     classes: String,
+    file: String,
     color: {
         type: String,
         default: 'secondary'
     }
 })
+
+const isImage = (path) => {
+    const imageExtensions = ['jpg', 'jpeg', 'png'];
+    return imageExtensions.includes(path.split('.').pop());
+};
 
 </script>
 
@@ -24,9 +31,14 @@ const props = defineProps({
             </div><!-- avatar-img -->
             <div class="note">
                 <h3 class="h5">{{ author.name }}</h3>
-                <p>
-                    {{ text }}
-                </p>
+                <p class="m-0">{{ text }}</p>
+                <div v-if="file">
+                    <img v-if="isImage(file)" style="max-width: 300px; width: 100%" :src="route('storage', { filePath: file })" class="mb-2">
+                    <div></div>
+                    <a :href="route('storage', { filePath: file })" download class="text-light">
+                        <DowloadIcon classes="align-middle" size="16" /> <span class="align-middle">Download</span>
+                    </a>
+                </div>
             </div><!-- note -->
         </div><!-- d-flex justify-start -->
     </div><!-- card -->

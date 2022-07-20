@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Interfaces\Messageable;
+use App\Models\Interfaces\Messageable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

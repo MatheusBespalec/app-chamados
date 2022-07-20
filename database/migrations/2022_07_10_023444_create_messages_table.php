@@ -17,11 +17,12 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->string('file_path')->nullable();
+            $table->string('from')->nullable();
             $table->string('text')->nullable();
+            $table->string('file_path')->nullable();
+            $table->boolean('external')->default(false);
             $table->foreignId('messageable_id');
             $table->string('messageable_type');
-            $table->string('from');
             $table->foreignIdFor(User::class)->nullable()->constrained()->restrictOnDelete()->restrictOnUpdate();
             $table->timestamps();
         });

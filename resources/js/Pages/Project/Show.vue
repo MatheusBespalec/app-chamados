@@ -18,8 +18,6 @@ import { onMounted } from 'vue';
 import { usePage, useForm, Link } from '@inertiajs/inertia-vue3';
 
 const project = usePage().props.value.project;
-console.log(project)
-console.log(usePage().props.value.customers)
 const breadcrumb = [
     {
         text: 'Projetos',

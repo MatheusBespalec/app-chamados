@@ -26,7 +26,7 @@ class ModuleStoreRequest extends FormRequest
     {
         return [
             'name' => ['bail', 'required', 'string'],
-            'description' => ['bail', 'required', 'string'],
+            'description' => ['string'],
             'project_id' => ['bail', 'required', 'integer', 'exists:projects,id']
         ];
     }

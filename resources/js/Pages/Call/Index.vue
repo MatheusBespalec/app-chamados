@@ -9,8 +9,6 @@ import EyeIcon from '@/Icons/EyeIcon';
 import Formatter from '@/Helpers/Formatter';
 import { Link, usePage } from '@inertiajs/inertia-vue3';
 
-console.log(usePage().props.value.calls)
-
 const breadcrumb = [
     {
         text: 'Chamados',

@@ -16,7 +16,7 @@ class Message extends Model
      *
      * @var array
      */
-    protected $fillable = ['file_path', 'text', 'from','user_id', 'messageable_type', 'messageable_id'];
+    protected $fillable = ['file_path', 'text', 'from', 'external', 'user_id', 'messageable_type', 'messageable_id'];
 
     /**
      * Get the parent noteable model.
@@ -36,17 +36,5 @@ class Message extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Get the message file_path.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
-     */
-    protected function filePath(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => url('/storage/' . $value),
-        );
     }
 }

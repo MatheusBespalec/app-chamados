@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
-class CallStoreRequest extends FormRequest
+class MessageStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class CallStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -24,11 +25,8 @@ class CallStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'uuid' => ['required', 'uuid', 'exists:customer_project,uuid'],
-            'title' => ['required', 'string'],
-            'description' => ['string'],
-            'from' => ['required', 'string'],
-            'category' => ['required', 'string']
+            'text' => ['string'],
+            'file' => ['file']
         ];
     }
 }

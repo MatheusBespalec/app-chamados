@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\AttackController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CallController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\ErrorController;
-use App\Http\Controllers\ModuleController;
-use App\Http\Controllers\PrivateFileController;
-use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\Internal\AttackController;
+use App\Http\Controllers\Internal\AuthController;
+use App\Http\Controllers\Internal\CallController;
+use App\Http\Controllers\Internal\CustomerController;
+use App\Http\Controllers\Internal\ErrorController;
+use App\Http\Controllers\Internal\MessageController;
+use App\Http\Controllers\Internal\ModuleController;
+use App\Http\Controllers\Internal\PrivateFileController;
+use App\Http\Controllers\Internal\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -47,14 +48,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/chamados', 'index')->name('index');
         Route::get('/chamados/{call}', 'show')->name('show')->whereNumber('call');
         Route::get('/chamados/{call}/historico', 'history')->name('history')->whereNumber('call');
-        Route::post('/chamados/{call}/nota', 'addNote')->name('notes.store')->whereNumber('call');
+        Route::post('/chamados/{call}/mensagem', 'storeMessage')->name('messages.store')->whereNumber('call');
+        Route::post('/chamados/{call}/enviar-mensagem', 'sendMessage')->name('messages.send')->whereNumber('call');
     });
 
     Route::controller(AttackController::class)->name('attacks.')->group(function () {
         Route::get('/ataques', 'index')->name('index');
         Route::get('/ataques/{attack}', 'show')->name('show')->whereNumber('attack');
         Route::get('/ataques/log/{log}', 'log')->name('log')->whereNumber('log');
-        Route::post('/ataques/{attack}/nota', 'addNote')->name('notes.store')->whereNumber('attack');
+        Route::post('/ataques/{attack}/nota', 'storeMessage')->name('messages.store')->whereNumber('attack');
     });
 
     Route::controller(ProjectController::class)->name('projects.')->group(function () {
@@ -69,13 +71,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/clientes/{customer}', 'show')->name('show')->whereNumber('customer');
         Route::get('/clientes/novo', 'create')->name('create');
         Route::post('/clientes/novo', 'store')->name('store');
-        Route::post('/clientes/{customer}/projeto', 'attachProject')->name('attachProject');
-        Route::post('/clientes/{customer}/mensagem', 'addMessage')->name('messages.store')->whereNumber('customer');
+        Route::post('/clientes/{customer}/projeto', 'attachProject')->name('attachProject')->whereNumber('customer');
+        Route::post('/clientes/{customer}/mensagem', 'storeMessage')->name('messages.store')->whereNumber('customer');
     });
 
     Route::controller(ModuleController::class)->name('modules.')->group(function () {
         Route::post('/modulos/novo', 'store')->name('store');
     });
 
-    Route::get('/storage/{filePath}', PrivateFileController::class)->where('filePath', '.*');
+    Route::controller(MessageController::class)->name('messages.')->group(function () {
+        Route::delete('/mensagems/{message}')->name('destroy');
+    });
+
+    Route::get('/storage/{filePath}', PrivateFileController::class)->where('filePath', '.*')->name('storage');
 });

@@ -9,8 +9,6 @@ import Table from '@/Components/Table';
 import EyeIcon from '@/Icons/EyeIcon';
 import { Link, usePage } from '@inertiajs/inertia-vue3';
 
-console.log(usePage().props.value.projects)
-
 const breadcrumb = [
     {
         text: 'Projetos',
