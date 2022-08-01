@@ -23,4 +23,9 @@ class CallRepository
 
         return $call;
     }
+
+    public function finish(Call &$call): bool
+    {
+        return $call->update(['status' => 2]);
+    }
 }

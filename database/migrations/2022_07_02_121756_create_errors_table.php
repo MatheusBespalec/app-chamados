@@ -15,13 +15,11 @@ return new class extends Migration
     {
         Schema::create('errors', function (Blueprint $table) {
             $table->id();
-            $table->integer('code');
-            $table->string('message');
+            $table->tinyInteger('code')->nullable();
+            $table->string('message')->nullable();
             $table->string('file');
             $table->string('line');
             $table->string('url');
-            $table->json('trace');
-            $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
     }

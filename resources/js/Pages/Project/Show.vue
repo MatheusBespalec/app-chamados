@@ -64,7 +64,7 @@ const saveNewModule = () => {
             </div><!-- col-12 -->
 
             <div class="col-12">
-                <h2>Clientes Contratantes</h2>
+                <h2>Clientes Associados</h2>
                 <Table :headers="['ID', 'Nome', 'UUID', '']">
                     <tr v-for="(customer, index) in $page.props.customers.data" :key="index">
                         <td>{{ customer.id }}</td>

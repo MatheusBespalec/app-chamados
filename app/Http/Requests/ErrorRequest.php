@@ -24,14 +24,24 @@ class ErrorRequest extends FormRequest
     public function rules()
     {
         return [
-            'customer_uuid' => ['bail', 'required', 'uuid', 'exists:customers,uuid'],
-            'request_data' => ['required', 'json'],
-            'message' => ['required', 'string'],
-            'line' => ['required', 'integer'],
-            'code' => ['required', 'integer'],
-            'file' => ['required', 'string'],
+            'uuid' => ['bail', 'required', 'uuid', 'exists:customer_project,uuid'],
             'url' => ['required', 'string'],
-            'trace' => ['required', 'json'],
+            'request_data' => ['required', 'array'],
+            'error_data' => ['required', 'array']
+
+            // 'aditional_data' => ['json'],
+            // 'raw_body' => ['json'],
+            // 'server' => ['json'],
+            // 'request' => ['json'],
+            // 'session' => ['json'],
+            // 'cookie' => ['json'],
+            // 'headers' => ['json'],
+
+            // 'message' => ['string'],
+            // 'line' => ['integer'],
+            // 'code' => ['integer'],
+            // 'file' => ['string'],
+            // 'trace' => ['json'],
         ];
     }
 }

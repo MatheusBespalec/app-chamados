@@ -6,6 +6,7 @@ import SettingIcon from '@/Icons/SettingIcon';
 import ErrorIcon from '@/Icons/ErrorIcon';
 import CallIcon from '@/Icons/CallIcon';
 import UsersIcon from '@/Icons/UsersIcon';
+import UserIcon from '@/Icons/UserIcon';
 import MenuIcon from '@/Icons/MenuIcon';
 import ExitIcon from '@/Icons/ExitIcon';
 import DashboardIcon from "@/Icons/DashboardIcon";
@@ -99,15 +100,46 @@ export default {
 
         <footer>
             <div class="user">
-                <div class="img">
-                    <div>
-
-                    </div>
+                <div class="img border border-light text-light">
+                    <UserIcon v-if="$page.props.auth.user.image === null" size="20" />
+                    <img v-if="$page.props.auth.user.image !== null" class="w-100" :src="route('storage', { filePath: $page.props.auth.user.image })">
                 </div>
-                <div class="info">
+                <Link class="info text-light" :href="route('users.profile')">
                     <h4>{{ $page.props.auth.user.name }}</h4>
                     <h5>Administrador</h5>
-                </div>
+                </Link>
+                <!-- <div class="btn-group dropup">
+                    <div class="d-flex flex-wrap pt-2" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="img">
+                            <div>
+
+                            </div>
+                        </div>
+                        <div class="info">
+                            <h4>{{ $page.props.auth.user.name }}</h4>
+                            <h5>Administrador</h5>
+                        </div>
+                    </div>
+                    <ul class="dropdown-menu p-0 overflow-hidden">
+                        <li>
+                            <a class="dropdown-item" href="#">Perfil</a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="#">No Idea</a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </li>
+
+                        <li><hr class="dropdown-divider"></li>
+
+                        <li>
+                            <a class="dropdown-item text-danger" href="#">Sair</a>
+                        </li>
+                    </ul>
+                </div> -->
             </div>
             <div class="icon">
                 <Link :href="route('logout')"  method="post" class="text-light">

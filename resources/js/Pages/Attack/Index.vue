@@ -1,12 +1,32 @@
 <script setup>
 
+import Label from '@/Components/Form/Label';
+import Input from '@/Components/Form/Input';
+import FormGroup from '@/Components/Form/FormGroup';
 import Table from '@/Components/Table';
 import EyeIcon from '@/Icons/EyeIcon';
 import Breadcrumb from '@/Components/Breadcrumb';
 import Button from '@/Components/Button';
 import MainTitle from '@/Components/MainTitle';
 import Paginate from '@/Components/Paginate'
-import { Link, usePage } from '@inertiajs/inertia-vue3';
+import { Link, usePage, useForm } from '@inertiajs/inertia-vue3';
+
+const params = new URLSearchParams(window.location.search)
+const filter = useForm({
+    id: params.get('id'),
+    url: params.get('url'),
+    from: params.get('from'),
+    until: params.get('until'),
+    description: params.get('description')
+});
+
+const updateList = () => {
+    filter.get(route('attacks.index'))
+};
+
+const resetForm = () => {
+    Inertia.get(route('attacks.index'));
+};
 
 const breadcrumb = [
     {
@@ -19,6 +39,37 @@ const breadcrumb = [
 <template>
     <Breadcrumb :items="breadcrumb" />
 
+        <div class="row">
+            <FormGroup class="col-sm-2">
+                <Label id="id" value="ID: " />
+                <Input id="id" type="number" @change="updateList" v-model="filter.id" />
+            </FormGroup>
+
+            <FormGroup class="col-sm-4">
+                <Label id="url" value="Url: " />
+                <Input id="url" @change="updateList" v-model="filter.url" />
+            </FormGroup>
+
+            <FormGroup class="col-sm-6">
+                <Label id="description" value="Descrição: " />
+                <Input id="description" @change="updateList" v-model="filter.description" />
+            </FormGroup>
+
+            <FormGroup class="col-sm-6">
+                <Label id="from" value="De: " />
+                <Input type="date" id="from" @change="updateList" v-model="filter.from" />
+            </FormGroup>
+
+            <FormGroup class="col-sm-6">
+                <Label id="until" value="Até: " />
+                <Input type="date" id="until" @change="updateList" v-model="filter.until" />
+            </FormGroup>
+        </div><!-- row -->
+
+    <Button @click="resetForm" type="button" color="warning">
+        Limpar Filtros
+    </Button>
+
     <section class="content">
         <MainTitle title="Ataques" />
 
@@ -27,8 +78,6 @@ const breadcrumb = [
                 <Table :headers="['ID', 'Controller', 'Action', 'URI', 'Ultima Ocorrência', '']">
                     <tr v-for="(attack, index) in $page.props.attacks.data" :key="index">
                         <td>{{ attack.id }}</td>
-                        <td>{{ attack.controller }}</td>
-                        <td>{{ attack.action }}</td>
                         <td>{{ attack.url }}</td>
                         <td>{{ (new Date(attack.updated_at)).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) }}</td>
                         <td>
@@ -40,7 +89,7 @@ const breadcrumb = [
                         </td>
                     </tr>
                 </Table>
-                <Paginate :links="$page.props.attacks.links" />
+                <Paginate :liPanks="$page.props.attacks.links" />
             </div>
         </div><!-- com-md-12 -->
     </section>

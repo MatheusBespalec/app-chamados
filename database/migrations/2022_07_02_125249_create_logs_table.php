@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Customer;
+use App\Models\Project;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,18 +17,13 @@ return new class extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
-            $table->string('http_method', 20)->nullable();
             $table->json('raw_body')->nullable();
-            $table->json('var_server')->nullable();
-            $table->json('var_get')->nullable();
-            $table->json('var_post')->nullable();
-            $table->json('var_request')->nullable();
-            $table->json('var_files')->nullable();
-            $table->json('var_session')->nullable();
-            $table->json('var_cookie')->nullable();
-            $table->json('var_headers')->nullable();
-            $table->json('var_env')->nullable();
-            $table->json('data')->nullable();
+            $table->json('server');
+            $table->json('request')->nullable();
+            $table->json('headers')->nullable();
+            $table->json('trace')->nullable();
+            $table->json('additional_data')->nullable();
+            $table->foreignIdFor(Project::class)->constrained()->restrictOnDelete()->restrictOnUpdate();
             $table->foreignIdFor(Customer::class)->constrained()->restrictOnDelete()->restrictOnUpdate();
             $table->foreignId('logable_id');
             $table->string('logable_type');
@@ -43,6 +39,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('logs', function (Blueprint $table) {
+            $table->dropForeignIdFor(Project::class);
             $table->dropForeignIdFor(Customer::class);
         });
         Schema::dropIfExists('logs');

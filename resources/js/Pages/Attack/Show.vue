@@ -1,24 +1,35 @@
 <script setup>
 
-import Table from '@/Components/Table';
 import NameValueTable from '@/Components/NameValueTable';
+import ChatMessage from '@/Components/ChatMessage';
 import Breadcrumb from '@/Components/Breadcrumb';
+import MainTitle from '@/Components/MainTitle';
+import Paginate from '@/Components/Paginate';
+import Content from '@/Components/Content';
 import Button from '@/Components/Button';
-import ChatMessage from '@/Components/ChatMessage'
-import SendIcon from '@/Icons/SendIcon'
+import Table from '@/Components/Table';
+import SendIcon from '@/Icons/SendIcon';
 import EyeIcon from '@/Icons/EyeIcon';
-import MainTitle from '@/Components/MainTitle.vue';
-import Paginate from '@/Components/Paginate.vue';
-import { Link, usePage } from '@inertiajs/inertia-vue3';
+import { Link, usePage, useForm } from '@inertiajs/inertia-vue3';
 
 const attack = usePage().props.value.attack;
 
-const note = useForm({
-    message: null
+const message = useForm({
+    file: undefined,
+    text: undefined
 });
 
+const createNewMessage = () => {
+    message.post(route('attacks.messages.store', { attack: attack.id }), {
+        onSuccess() {
+            message.reset()
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+    })
+};
+
 const createNewNote = () => {
-    note.post(route('attacks.notes.store', { attack: attack.id }))
+    note.post(route('attacks.messages.store', { attack: attack.id }))
     note.reset()
 };
 
@@ -47,7 +58,7 @@ const details = [
 
 <template>
     <Breadcrumb :items="breadcrumb" />
-    <section class="content">
+    <Content>
         <div class="col-12">
             <MainTitle :title="`Tentativas de ataque em: ${attack.controller} / ${attack.action}`" />
         </div><!-- col-12 -->
@@ -93,23 +104,33 @@ const details = [
             <h2>Anotações</h2>
 
             <ChatMessage
-                v-for="(note, index) in $page.props.attack.notes"
+                v-for="(message, index) in $page.props.attack.messages"
                 :key="index"
-                :text="note.text"
-                :color="note.user_id == $page.props.auth.user.id ? 'light' : 'secondary'"
-                :author="{ name: note.user.name }"
-                :classes="note.user_id == $page.props.auth.user.id
+                :text="message.text"
+                :file="message.file_path"
+                :color="message.user_id == $page.props.auth.user.id ? 'light' : 'secondary'"
+                :author="{ name: message.from }"
+                :classes="message.user_id == $page.props.auth.user.id
                     ? 'bg-primary text-white float-end'
                     : 'bg-info text-dark float-start'"
             />
 
             <div class="border rounded-circle">
-                <div class="input-group mb-3 border rounded-circle">
+                <div class="mb-3">
+                    <input class="form-control" type="file" @input="message.file = $event.target.files[0]">
+                </div>
+
+                <div class="mb-3 input-group">
                     <span class="input-group-text">Mensagem</span>
-                    <textarea class="form-control" v-model="note.message" placeholder="Adicione uma mensagem ..."></textarea>
-                    <button class="btn btn-outline-primary" type="button" @click="createNewNote"><SendIcon /></button>
+                    <textarea class="form-control" v-model="message.text" placeholder="Adicione uma mensagem ..."></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <button class="btn btn-outline-primary w-100" type="button" @click="createNewMessage">
+                        Salvar <SendIcon />
+                    </button>
                 </div>
             </div>
         </div><!-- col-12 -->
-    </section><!-- content -->
+    </Content>
 </template>

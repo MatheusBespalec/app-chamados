@@ -7,6 +7,8 @@ import Button from '@/Components/Button';
 import Table from '@/Components/Table';
 import EyeIcon from '@/Icons/EyeIcon';
 import Formatter from '@/Helpers/Formatter';
+import Paginate from '@/Components/Paginate';
+import { callStatus } from '@/Helpers/Domain';
 import { Link, usePage } from '@inertiajs/inertia-vue3';
 
 const breadcrumb = [
@@ -25,13 +27,13 @@ const breadcrumb = [
 
         <div class="row">
             <div class="col-12">
-                <Table :headers="['ID', 'Cliente', 'Projeto', 'Status', 'Responsavel', 'Ultima Atualização', 'Data de Criação', '']">
+                <Table :headers="['ID', 'Titulo', 'Cliente', 'Projeto', 'Status', 'Ultima Atualização', 'Data de Criação', '']">
                     <tr v-for="(call, index) in $page.props.calls.data" :key="index">
                         <td>{{ call.id }}</td>
+                        <td>{{ call.title }}</td>
                         <td>{{ call.customer.name }}</td>
                         <td>{{ call.project.name }}</td>
-                        <td>{{ call.status }}</td>
-                        <td>{{ call.user_id }}</td>
+                        <td>{{ callStatus(call.status) }}</td>
                         <td>{{ Formatter.asDateTime(call.updated_at) }}</td>
                         <td>{{ Formatter.asDateTime(call.created_at) }}</td>
                         <td>
@@ -43,6 +45,7 @@ const breadcrumb = [
                         </td>
                     </tr>
                 </Table>
+                <Paginate :links="$page.props.calls.links" />
             </div>
         </div><!-- com-md-12 -->
     </Content>

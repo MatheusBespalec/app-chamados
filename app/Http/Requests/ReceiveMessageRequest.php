@@ -2,11 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\HttpStatusHelper\FileHelper;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Str;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\File\File;
 use Illuminate\Validation\ValidationException;
 
 class ReceiveMessageRequest extends FormRequest
@@ -28,21 +25,13 @@ class ReceiveMessageRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
+        if (!isset($this->file)) {
+            return;
+        }
+
         $fileData = base64_decode($this->file);
         if ($fileData) {
-            $tmpFilePath = sys_get_temp_dir() . '/' . Str::uuid()->toString();
-            file_put_contents($tmpFilePath, $fileData);
-
-            $tmpFile = new File($tmpFilePath);
-
-            $file = new UploadedFile(
-                $tmpFile->getPathname(),
-                $tmpFile->getFilename(),
-                $tmpFile->getMimeType(),
-                0,
-                true
-            );
-
+            $file = FileHelper::transformBase64ToFileToUploadedFile($fileData);
             $this->merge([
                 'file' => $file,
             ]);

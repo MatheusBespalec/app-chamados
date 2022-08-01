@@ -13,10 +13,10 @@ class PrivateFileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke($filePath)
+    public function __invoke($filePath = null)
     {
         $fullPath = storage_path('app/' . $filePath);
-        if (file_exists($fullPath)) {
+        if (!empty($filePath) && file_exists($fullPath)) {
             return response()->file($fullPath);
         }
         return abort(404, 'Resource Unavailable');

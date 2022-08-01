@@ -51,6 +51,6 @@ class CustomerController extends Controller
     public function storeMessage(MessageRepository $repository, Customer $customer, MessageStoreRequest $request)
     {
         $repository->saveInternalMessage($customer, $request?->text, $request?->file);
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Sua mensagem foi salva');
     }
 }

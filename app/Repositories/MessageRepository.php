@@ -25,7 +25,6 @@ class MessageRepository
             'text' => $text,
             'file_path' => $file_name ?? null,
             'user_id' => Auth::user()->id,
-            'external' => true,
             'messageable_type' => $messageagle::class,
             'messageable_id' => $messageagle->id
         ]);

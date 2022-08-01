@@ -3,8 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
-class AttackRequest extends FormRequest
+class UserUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +15,7 @@ class AttackRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::user();
     }
 
     /**
@@ -24,9 +26,9 @@ class AttackRequest extends FormRequest
     public function rules()
     {
         return [
-            'uuid' => ['bail', 'required', 'uuid', 'exists:customer_project,uuid'],
-            'attack_data' => ['required', 'array'],
-            'error_data' => ['required', 'array']
+            'name' => ['required', 'string'],
+            'email' => ['required', 'email'],
+            'image' => ['file', 'image']
         ];
     }
 }

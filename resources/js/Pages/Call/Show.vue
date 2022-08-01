@@ -11,8 +11,9 @@ import Content from '@/Components/Content'
 import ChatMessage from '@/Components/ChatMessage'
 import Modal from '@/Components/Modal';
 import { Modal as BoostrapModal } from 'bootstrap';
-import { callStatus } from '@/Helpers/DomainStatus';
+import { callStatus } from '@/Helpers/Domain';
 import { onMounted } from 'vue';
+import { Inertia } from '@inertiajs/inertia'
 import { usePage, Link, useForm } from '@inertiajs/inertia-vue3';
 
 let finishCallModal;
@@ -20,21 +21,29 @@ onMounted(() => {
     finishCallModal = new BoostrapModal(document.getElementById('finish-call'));
 });
 
+
 const openFinishCallModal = () => {
     finishCallModal.show()
 }
 
-const call = usePage().props.value.call;
 const message = useForm({
     text: undefined,
     file: undefined
 });
 const createNewMessage = () => {
-    message.post(route('calls.messages.store', { call: call.id }), {
+    message.post(route('calls.messages.store', { call: usePage().props.value.call.id }), {
         onSuccess() {
             message.reset()
             window.scrollTo(0, document.body.scrollHeight);
         }
+    })
+};
+const finishCall = () => {
+    useForm().patch(route('calls.finish', { call: usePage().props.value.call.id }), {
+        onFinish() {
+            finishCallModal.hide()
+            window.scrollTo(0, 0);
+        },
     })
 };
 const breadcrumb = [
@@ -43,34 +52,38 @@ const breadcrumb = [
         route: 'calls.index'
     },
     {
-        text: `Chamado ${call.id}`
+        text: `Chamado ${usePage().props.value.call.id}`
     }
 ];
 
 const details = [
     {
         name: 'Cliente',
-        value: call.customer.name
+        value: usePage().props.value.call.customer.name
     },
     {
         name: 'Projeto',
-        value: call.project.name
+        value: usePage().props.value.call.project.name
     },
     {
         name: 'Categoria',
-        value: call.category
+        value: usePage().props.value.call.category
     },
     {
         name: 'Criador do Chamado',
-        value: call.from
+        value: usePage().props.value.call.from
     },
     {
         name: 'Status',
-        value: callStatus(call.status)
+        value: callStatus(usePage().props.value.call.status)
+    },
+    {
+        name: 'UUID',
+        value: usePage().props.value.call.uuid
     },
     {
         name: 'Descrição',
-        value: call.description
+        value: usePage().props.value.call.description
     },
 ];
 
@@ -82,15 +95,14 @@ const details = [
     <Content>
         <div class="row">
             <div class="col-12">
-                <MainTitle :title="`${call.customer.name} - ${call.title}`" />
+                <MainTitle :title="`${$page.props.call.customer.name} - ${$page.props.call.title}`" />
             </div><!-- col-12 -->
 
             <div class="col-12">
                 <h2>Detalhes</h2>
                 <NameValueTable :content="details" />
-                <Link :href="route('calls.history', { call: call.id })" class="btn btn-warning me-2">Histórico</Link>
-                <Link :href="route('calls.history', { call: call.id })" class="btn btn-info me-2">Atribuir Chamado</Link>
-                <a @click="openFinishCallModal" class="btn btn-success me-2">Concluir Chamado</a>
+                <Link :href="route('calls.history', { call: $page.props.call.id })" class="btn btn-warning me-2">Histórico</Link>
+                <a v-if="$page.props.call.status == 1" @click="openFinishCallModal" class="btn btn-success me-2">Concluir Chamado</a>
             </div><!-- col-6 -->
 
             <div class="col-12 mt-5">
@@ -131,7 +143,7 @@ const details = [
             <h3>Deseja finalizar este chamado?</h3>
         </template>
         <template v-slot:footer>
-            <Button color="success">Finalizar</Button>
+            <Button @click="finishCall" color="success">Finalizar</Button>
         </template>
     </Modal>
 </template>

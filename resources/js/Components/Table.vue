@@ -9,7 +9,7 @@ const props = defineProps({
 
 <template>
     <div class="table-responsive">
-        <table class="table table-hover table-bordered" :class="classes">
+        <table class="table table-hover table-bordered align-middle" :class="classes">
             <thead class="table-dark">
                 <tr>
                     <th v-for="(header, index) in headers" :key="index" scope="col">{{ header }}</th>

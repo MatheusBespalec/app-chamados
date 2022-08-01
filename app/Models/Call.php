@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Interfaces\Messageable;
+use App\Repositories\CallRepository;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -49,5 +50,16 @@ class Call extends Model implements Messageable
     public function messages()
     {
         return $this->morphMany(Message::class, 'messageable');
+    }
+
+    /**
+     * Scope a query to only include calls in initial state.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return void
+     */
+    public function scopeOpen($query)
+    {
+        $query->where('status', 1);
     }
 }

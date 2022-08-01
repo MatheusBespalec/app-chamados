@@ -4,11 +4,13 @@ use App\Http\Controllers\Internal\AttackController;
 use App\Http\Controllers\Internal\AuthController;
 use App\Http\Controllers\Internal\CallController;
 use App\Http\Controllers\Internal\CustomerController;
+use App\Http\Controllers\Internal\DashboardController;
 use App\Http\Controllers\Internal\ErrorController;
 use App\Http\Controllers\Internal\MessageController;
 use App\Http\Controllers\Internal\ModuleController;
 use App\Http\Controllers\Internal\PrivateFileController;
 use App\Http\Controllers\Internal\ProjectController;
+use App\Http\Controllers\Internal\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -23,30 +25,35 @@ use Inertia\Inertia;
 |
 */
 
-// Public Routes
 Route::middleware('guest')->group(function () {
     Route::get('login', [AuthController::class, 'login'])->name('login');
     Route::post('login', [AuthController::class, 'signIn'])->name('signIn');
 });
 
-// Private Routes
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'home'])->name('dashboard');
 
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::controller(UserController::class)->name('users.')->group(function () {
+        Route::get('perfil', 'profile')->name('profile');
+        Route::get('usuarios', 'index')->name('index');
+        Route::get('usuarios/novo', 'create')->name('create');
+        Route::post('usuarios/novo', 'store')->name('store');
+        Route::post('usuarios/{user}/editar', 'update')->name('update')->whereNumber('user');
+    });
 
     Route::controller(ErrorController::class)->name('errors.')->group(function () {
         Route::get('/erros', 'index')->name('index');
         Route::get('/erros/{error}', 'show')->name('show')->whereNumber('error');
         Route::get('/erros/log/{log}', 'log')->name('log')->whereNumber('log');
-        Route::post('/erros/{error}/nota', 'addNote')->name('notes.store')->whereNumber('error');
+        Route::post('/erros/{error}/mensagem', 'storeMessage')->name('messages.store')->whereNumber('error');
     });
 
     Route::controller(CallController::class)->name('calls.')->group(function () {
         Route::get('/chamados', 'index')->name('index');
         Route::get('/chamados/{call}', 'show')->name('show')->whereNumber('call');
+        Route::patch('/chamados/{call}/finalizar', 'finish')->name('finish')->whereNumber('call');
         Route::get('/chamados/{call}/historico', 'history')->name('history')->whereNumber('call');
         Route::post('/chamados/{call}/mensagem', 'storeMessage')->name('messages.store')->whereNumber('call');
         Route::post('/chamados/{call}/enviar-mensagem', 'sendMessage')->name('messages.send')->whereNumber('call');
@@ -56,7 +63,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/ataques', 'index')->name('index');
         Route::get('/ataques/{attack}', 'show')->name('show')->whereNumber('attack');
         Route::get('/ataques/log/{log}', 'log')->name('log')->whereNumber('log');
-        Route::post('/ataques/{attack}/nota', 'storeMessage')->name('messages.store')->whereNumber('attack');
+        Route::post('/ataques/{attack}/mensagem', 'storeMessage')->name('messages.store')->whereNumber('attack');
     });
 
     Route::controller(ProjectController::class)->name('projects.')->group(function () {
@@ -83,5 +90,5 @@ Route::middleware('auth')->group(function () {
         Route::delete('/mensagems/{message}')->name('destroy');
     });
 
-    Route::get('/storage/{filePath}', PrivateFileController::class)->where('filePath', '.*')->name('storage');
+    Route::get('/storage/{filePath?}', PrivateFileController::class)->where('filePath', '.*')->name('storage');
 });

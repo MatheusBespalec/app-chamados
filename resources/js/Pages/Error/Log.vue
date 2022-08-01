@@ -26,59 +26,34 @@ const breadcrumb = [
 
 const dataList = [
     {
-        name: 'Raw Body',
+        name: 'Body',
         description: 'Body da Requisição',
         data: log.raw_body,
     },
     {
         name: '$_SERVER',
         description: 'Informação do servidor e ambiente de execução',
-        data: log.var_server,
+        data: log.server,
     },
     {
-        name: '$_GET',
-        description: 'Variáveis HTTP GET',
-        data: log.var_get,
-    },
-    {
-        name: '$_POST',
-        description: 'Variáveis HTTP POST',
-        data: log.var_post,
-    },
-    {
-        name: '$_FILES',
-        description: 'Variáveis de Upload de Arquivos HTTP',
-        data: log.var_files,
-    },
-    {
-        name: '$_SESSION',
-        description: 'Variáveis de sessão',
-        data: log.var_session,
-    },
-    {
-        name: '$_REQUEST',
+        name: 'Request',
         description: 'Variáveis de requisição HTTP',
-        data: log.var_request,
+        data: log.request,
     },
     {
-        name: '$_ENV',
-        description: 'Variáveis de ambiente',
-        data: log.var_env,
-    },
-    {
-        name: '$_COOKIE',
-        description: 'Cookies HTTP',
-        data: log.var_cookie,
-    },
-    {
-        name: '$http_response_header',
-        description: 'Cabeçalhos de resposta HTTP',
-        data: log.var_headers,
+        name: 'Header',
+        description: 'Headers da requisição',
+        data: log.headers,
     },
     {
         name: 'Dados',
         description: 'Dados adicionais adicionados ao log',
-        data: log.data,
+        data: log.additional_data,
+    },
+    {
+        name: 'Trilha',
+        description: 'Caminho do log',
+        data: log.trace,
     }
 ];
 

@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Interfaces\Logable;
 use App\Models\Interfaces\Messageable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Error extends Model implements Messageable
+class Error extends Model implements Messageable, Logable
 {
     use HasFactory;
 
@@ -15,7 +16,7 @@ class Error extends Model implements Messageable
      *
      * @var array
      */
-    protected $fillable = ['code', 'message', 'file', 'line', 'url', 'trace', 'status'];
+    protected $fillable = ['code', 'message', 'file', 'line', 'url', 'trace'];
 
     /**
      * Get all of the error's logs.

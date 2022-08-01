@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Interfaces\Logable;
 use App\Models\Interfaces\Messageable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Attack extends Model implements Messageable
+class Attack extends Model implements Messageable, Logable
 {
     use HasFactory;
 
@@ -15,7 +16,7 @@ class Attack extends Model implements Messageable
      *
      * @var array
      */
-    protected $fillable = ['description', 'controller', 'action', 'url'];
+    protected $fillable = ['description', 'url'];
 
     /**
      * Get all of the attacks logs.

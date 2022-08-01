@@ -10,17 +10,21 @@ import ChatMessage from '@/Components/ChatMessage'
 import SendIcon from '@/Icons/SendIcon'
 import Table from '@/Components/Table';
 import EyeIcon from '@/Icons/EyeIcon';
-import { usePage, Link } from '@inertiajs/inertia-vue3';
+import { usePage, Link, useForm } from '@inertiajs/inertia-vue3';
 
 const error = usePage().props.value.error;
 
-const note = useForm({
-    message: null
+const message = useForm({
+    file: undefined,
+    text: undefined
 });
-
-const createNewNote = () => {
-    note.post(route('errors.notes.store', { error: error.id }))
-    note.reset()
+const createNewMessage = () => {
+    message.post(route('errors.messages.store', { error: error.id }), {
+        onSuccess() {
+            message.reset()
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+    })
 };
 
 const breadcrumb = [
@@ -97,47 +101,38 @@ const details = [
                 <Paginate v-if="$page.props.logs.data.length > 0" :links="$page.props.logs.links" />
             </div><!-- col-lg-6 -->
 
-            <div class="col-12">
-                <h2>Anotações</h2>
-                <div class="card border">
-                    <div class="d-flex justify-start">
-                        <div class="avatar-img m-2">
-                            <div class="bg-secondary rounded-5" style="width: 50px; height: 50px">
-
-                            </div><!-- avatar-img me-2 -->
-                        </div><!-- avatar-img -->
-                        <div class="note">
-                            <h3>Nome do cidadão</h3>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, est maxime molestias perferendis recusandae vitae voluptates. Assumenda commodi corporis ea excepturi ipsam ipsum, iste laudantium maxime nesciunt odio porro quia.
-                            </p>
-                        </div><!-- note -->
-                    </div><!-- d-flex justify-start -->
-                </div><!-- card -->
-            </div><!-- col-md-6 -->
-
             <div class="col-12 mt-5">
-                <h2>Anotações</h2>
+            <h2>Anotações</h2>
 
-                <ChatMessage
-                    v-for="(note, index) in $page.props.error.notes"
-                    :key="index"
-                    :text="note.text"
-                    :color="note.user_id == $page.props.auth.user.id ? 'light' : 'secondary'"
-                    :author="{ name: note.user.name }"
-                    :classes="note.user_id == $page.props.auth.user.id
-                        ? 'bg-primary text-white float-end'
-                        : 'bg-info text-dark float-start'"
-                />
+            <ChatMessage
+                v-for="(message, index) in $page.props.error.messages"
+                :key="index"
+                :text="message.text"
+                :file="message.file_path"
+                :color="message.user_id == $page.props.auth.user.id ? 'light' : 'secondary'"
+                :author="{ name: message.from }"
+                :classes="message.user_id == $page.props.auth.user.id
+                    ? 'bg-primary text-white float-end'
+                    : 'bg-info text-dark float-start'"
+            />
 
-                <div class="border rounded-circle">
-                    <div class="input-group mb-3 border rounded-circle">
-                        <span class="input-group-text">Mensagem</span>
-                        <textarea class="form-control" v-model="note.message" placeholder="Adicione uma mensagem ..."></textarea>
-                        <button class="btn btn-outline-primary" type="button" @click="createNewNote"><SendIcon /></button>
-                    </div>
+            <div class="border rounded-circle">
+                <div class="mb-3">
+                    <input class="form-control" type="file" @input="message.file = $event.target.files[0]">
                 </div>
-            </div><!-- col-12 -->
+
+                <div class="mb-3 input-group">
+                    <span class="input-group-text">Mensagem</span>
+                    <textarea class="form-control" v-model="message.text" placeholder="Adicione uma mensagem ..."></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <button class="btn btn-outline-primary w-100" type="button" @click="createNewMessage">
+                        Salvar <SendIcon />
+                    </button>
+                </div>
+            </div>
+        </div><!-- col-12 -->
         </div><!-- row -->
     </Content>
 </template>

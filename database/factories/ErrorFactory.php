@@ -23,7 +23,6 @@ class ErrorFactory extends Factory
             'line' => $this->faker->numberBetween(0, 100),
             'url' => preg_replace('/^(.*):\/\/(.*)\//', '/', $this->faker->url(), 1),
             'trace' => json_encode(debug_backtrace()),
-            'status' => $this->faker->numberBetween(0, 2),
         ];
     }
 }

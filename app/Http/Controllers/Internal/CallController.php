@@ -22,9 +22,10 @@ class CallController extends Controller
         return Inertia::render('Call/Index', compact('calls'));
     }
 
-    public function show(int $call_id)
+    public function show(int $id)
     {
         $call = Call::query()
+            ->whereId($id)
             ->with('customer', 'project')
             ->with(['messages' => function ($query) {
                 $query->whereExternal(false)->with('user');
@@ -54,5 +55,11 @@ class CallController extends Controller
     {
         $repository->sendExternalMessage($call, $request?->text, $request?->file);
         return redirect()->back()->with('success', 'Mensagem enviada com sucesso!');
+    }
+
+    public function finish(CallRepository $callRepository, Call $call)
+    {
+        $callRepository->finish($call);
+        return redirect()->back();
     }
 }

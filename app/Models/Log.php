@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,18 +16,16 @@ class Log extends Model
      * @var array
      */
     protected $fillable = [
-        'http_method',
         'raw_body',
-        'var_server',
-        'var_get',
-        'var_post',
-        'var_request',
-        'var_files',
-        'var_session',
-        'var_cookie',
-        'var_headers',
-        'var_env',
-        'data'
+        'server',
+        'request',
+        'headers',
+        'trace',
+        'additional_data',
+        'project_id',
+        'customer_id',
+        'logable_id',
+        'logable_type',
     ];
 
     /**
@@ -40,6 +39,14 @@ class Log extends Model
     }
 
     /**
+     * Get the customer that owns the log.
+     */
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    /**
      * The "booted" method of the model.
      *
      * @return void
@@ -47,7 +54,15 @@ class Log extends Model
     protected static function booted()
     {
         static::created(function ($log) {
-            $log->logable->update(['updated_at' => now()]);
+            $log->logable_type::query()->whereId($log->logable_id)->update(['updated_at' => now()]);
         });
+    }
+
+    /**
+     * Get all of the log messages.
+     */
+    public function messages()
+    {
+        return $this->morphMany(Message::class, 'messageable');
     }
 }

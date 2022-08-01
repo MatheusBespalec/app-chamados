@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\External\AttackApiController;
 use App\Http\Controllers\External\CallApiController;
+use App\Http\Controllers\External\ErrorApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,4 +23,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('/v1')->group(function () {
     Route::post('/chamados/novo', [CallApiController::class, 'store']);
+    Route::post('/chamados/mensagens/nova', [CallApiController::class, 'receiveMessage']);
+
+    Route::put('/erros', ErrorApiController::class);
+    Route::put('/ataques', AttackApiController::class);
 });

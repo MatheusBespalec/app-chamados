@@ -115,7 +115,9 @@ aside#menu {
             .img {
                 height: $footer-height;
                 width: $footer-height;
-                background: gray;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 border-radius:  math.div($footer-height, 2);
                 overflow: hidden;
                 margin-right: 10px;

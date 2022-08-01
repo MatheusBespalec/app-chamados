@@ -2,47 +2,39 @@
 
 namespace App\Repositories;
 
+use App\Entities\AttackEntity;
+use App\Entities\LogEntity;
 use App\Models\Attack;
 use App\Models\Customer;
-use App\Models\Log;
+use App\Models\Project;
 
 class AttackRepository
 {
-    public function create(string $description, string $controller,  string $action, string $url, array $requestData, Customer $customer): Attack
+    public function insertOrUpdate(AttackEntity $attackEntity, LogEntity $logEntity, Project $project, Customer $customer): Attack
     {
         $attack = Attack::query()
-            ->whereDescription($description)
-            ->whereController($controller)
-            ->whereAction($action)
-            ->whereUrl($url)
+            ->whereDescription($attackEntity->get('description'))
+            ->whereUrl($attackEntity->get('url'))
             ->first();
 
         if (is_null($attack)) {
             // Notify new error?
             $attack = Attack::create([
-                'description' => $description,
-                'controller' => $controller,
-                'action' => $action,
-                'url' => $url,
+                'description' => $attackEntity->get('description'),
+                'url' => $attackEntity->get('url'),
             ]);
         }
 
-        Log::create([
-            'raw_body' => $requestData['raw_body'] ?? null,
-            'var_server' => $requestData['server'] ?? null,
-            'var_get' => $requestData['get'] ?? null,
-            'var_post' => $requestData['post'] ?? null,
-            'var_request' => $requestData['request'] ?? null,
-            'var_files' => $requestData['files'] ?? null,
-            'var_session' => $requestData['session'] ?? null,
-            'var_cookie' => $requestData['cookie'] ?? null,
-            'var_headers' => $requestData['headers'] ?? null,
-            'var_env' => $requestData['env'] ?? null,
-            'var_env' => $requestData['method'] ?? null,
-            'customer_id' => $customer->id,
-            'logable_id' => $attack->id,
-            'logable_type' => $attack::class,
-        ]);
+        (new LogRepository)->create(
+            $logEntity->get('raw_body'),
+            $logEntity->get('request'),
+            $logEntity->get('server'),
+            $logEntity->get('headers'),
+            $logEntity->get('trace'),
+            $attack,
+            $customer,
+            $project,
+        );
 
         return $attack;
     }
