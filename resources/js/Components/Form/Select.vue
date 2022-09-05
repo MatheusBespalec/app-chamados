@@ -9,7 +9,7 @@ export default {
 
 <template>
     <select class="form-select" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)">
-        <option value="0">{{ placeholder }}</option>
+        <option value="0" disabled selected hidden>{{ placeholder }}</option>
         <option v-for="(resource, index) in resources" :key="index" :value="resource.id">{{ resource.name }}</option>
     </select>
 </template>

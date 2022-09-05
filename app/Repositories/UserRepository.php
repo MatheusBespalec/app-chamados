@@ -2,12 +2,9 @@
 
 namespace App\Repositories;
 
-use App\Models\Interfaces\Messageable;
-use App\Models\Message;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class UserRepository

@@ -83,13 +83,13 @@ const details = [
             <div class="col-lg-6">
                 <h2>Registro de Ocorrências</h2>
 
-                <Table :headers="['ID', 'Banco', 'Data', '']" >
+                <Table :headers="['ID', 'Cliente', 'Data', '']" >
                     <tr v-for="(log, index) in $page.props.logs.data" :key="index">
                         <td>{{ log.id }}</td>
                         <td>{{ log.customer.name }}</td>
                         <td>{{ (new Date(log.created_at)).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }) }}</td>
                         <td>
-                            <Link :href="route('errors.log', { log: log.id })">
+                            <Link :href="route('logs.show', { log: log.id })">
                                 <Button type="button" color="primary" classes="btn-sm">
                                     <EyeIcon size="15" />
                                 </Button>

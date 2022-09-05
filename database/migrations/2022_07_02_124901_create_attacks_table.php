@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('attacks', function (Blueprint $table) {
             $table->id();
+            $table->string('route');
             $table->string('description');
-            $table->string('url');
             $table->timestamps();
         });
     }

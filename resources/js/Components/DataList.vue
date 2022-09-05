@@ -43,7 +43,7 @@ const props = defineProps({
                     :id="`list-${index}`"
                     :aria-labelledby="`list-${index}-list`"
                 >
-                    <pre>{{ JSON.parse(item.data, null, 2) }}</pre>
+                    <pre v-if="item.data != undefined" >{{ JSON.parse(item.data, null, 2) }}</pre>
                 </div>
             </div><!-- tab-content -->
         </div><!-- col-8 -->

@@ -20,7 +20,7 @@ class Log extends Model
         'server',
         'request',
         'headers',
-        'trace',
+        'session',
         'additional_data',
         'project_id',
         'customer_id',
@@ -44,6 +44,14 @@ class Log extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    /**
+     * Get the project that owns the log.
+     */
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
     }
 
     /**

@@ -1,18 +1,19 @@
 <?php
 
-use App\Http\Controllers\Internal\AttackController;
-use App\Http\Controllers\Internal\AuthController;
-use App\Http\Controllers\Internal\CallController;
-use App\Http\Controllers\Internal\CustomerController;
-use App\Http\Controllers\Internal\DashboardController;
-use App\Http\Controllers\Internal\ErrorController;
-use App\Http\Controllers\Internal\MessageController;
-use App\Http\Controllers\Internal\ModuleController;
-use App\Http\Controllers\Internal\PrivateFileController;
-use App\Http\Controllers\Internal\ProjectController;
-use App\Http\Controllers\Internal\UserController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\AttackController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CallController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ErrorController;
+use App\Http\Controllers\LogController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\PrivateFileController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\WhitelistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,6 +89,16 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(MessageController::class)->name('messages.')->group(function () {
         Route::delete('/mensagems/{message}')->name('destroy');
+    });
+
+    Route::controller(LogController::class)->name('logs.')->group(function () {
+        Route::get('/logs', 'index')->name('index');
+        Route::get('/logs/{log}', 'show')->name('show');
+    });
+
+    Route::controller(WhitelistController::class)->name('whitelist.')->group(function () {
+        Route::post('/whitelist', 'store')->name('store');
+        Route::delete('/whitelist/{ip}', 'destroy')->name('destroy');
     });
 
     Route::get('/storage/{filePath?}', PrivateFileController::class)->where('filePath', '.*')->name('storage');

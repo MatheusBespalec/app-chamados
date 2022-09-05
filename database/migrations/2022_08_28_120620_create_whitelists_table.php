@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('errors', function (Blueprint $table) {
+        Schema::create('whitelists', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('code')->nullable();
-            $table->string('message')->nullable();
-            $table->string('file');
-            $table->string('line');
-            $table->string('route');
+            $table->string('ip', 50);
+            $table->date('expiration')->nullable();
+            $table->string('description')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('errors');
+        Schema::dropIfExists('whitelists');
     }
 };

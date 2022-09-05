@@ -14,14 +14,14 @@ class AttackRepository
     {
         $attack = Attack::query()
             ->whereDescription($attackEntity->get('description'))
-            ->whereUrl($attackEntity->get('url'))
+            ->whereUrl($attackEntity->get('route'))
             ->first();
 
         if (is_null($attack)) {
-            // Notify new error?
+            // Notify new attack?
             $attack = Attack::create([
                 'description' => $attackEntity->get('description'),
-                'url' => $attackEntity->get('url'),
+                'url' => $attackEntity->get('route'),
             ]);
         }
 

@@ -18,7 +18,7 @@ class CallApiController extends ApiController
             $request->title,
             $request->description,
             $request->from,
-            $request->input('category'),
+            $request->category,
             $pivot->customer,
             $pivot->project
         );

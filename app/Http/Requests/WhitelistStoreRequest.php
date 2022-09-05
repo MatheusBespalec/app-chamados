@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
-class AttackRequest extends FormRequest
+class WhitelistStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class AttackRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -24,9 +25,9 @@ class AttackRequest extends FormRequest
     public function rules()
     {
         return [
-            'uuid' => ['bail', 'required', 'uuid', 'exists:customer_project,uuid'],
-            'attack_data' => ['required', 'array'],
-            'request_data' => ['required', 'array']
+            'ip' => ['required', 'ip'],
+            'expiration' => ['nullable', 'date'],
+            'description' => ['nullable', 'string']
         ];
     }
 }

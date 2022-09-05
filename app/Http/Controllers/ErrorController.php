@@ -1,16 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Internal;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\ErrorRequest;
 use App\Http\Requests\MessageStoreRequest;
 use App\Models\Customer;
 use App\Models\Error;
 use App\Models\Log;
-use App\Repositories\ErrorRepository;
+use App\Models\Project;
 use App\Repositories\MessageRepository;
-use App\Repositories\NoteRepository;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -19,6 +16,8 @@ class ErrorController extends Controller
 {
     public function index(Request $request)
     {
+        $projects = Project::all();
+        $customers = Customer::all();
         $errors = Error::query();
 
         if ($request->id) {
@@ -39,7 +38,7 @@ class ErrorController extends Controller
         }
 
         $errors = $errors->paginate(10);
-        return inertia('Error/Index', compact('errors'));
+        return inertia('Error/Index', compact('errors', 'customers', 'projects'));
     }
 
     public function show(int $id)

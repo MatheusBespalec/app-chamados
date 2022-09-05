@@ -1,18 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Internal;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerAttachProjectRequest;
 use App\Http\Requests\CustomerStoreRequest;
 use App\Http\Requests\MessageStoreRequest;
 use App\Models\Customer;
-use App\Models\CustomerProject;
 use App\Models\Project;
 use App\Repositories\CustomerRepository;
 use App\Repositories\MessageRepository;
-use App\Repositories\NoteRepository;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 

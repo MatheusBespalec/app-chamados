@@ -18,10 +18,10 @@ return new class extends Migration
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
             $table->json('raw_body')->nullable();
-            $table->json('server');
+            $table->json('server')->nullable();
             $table->json('request')->nullable();
             $table->json('headers')->nullable();
-            $table->json('trace')->nullable();
+            $table->json('session')->nullable();
             $table->json('additional_data')->nullable();
             $table->foreignIdFor(Project::class)->constrained()->restrictOnDelete()->restrictOnUpdate();
             $table->foreignIdFor(Customer::class)->constrained()->restrictOnDelete()->restrictOnUpdate();

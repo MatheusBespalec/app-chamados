@@ -1,16 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Internal;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\CallStoreRequest;
 use App\Http\Requests\MessageStoreRequest;
 use App\Models\Call;
-use App\Models\CustomerProject;
 use App\Repositories\CallRepository;
 use App\Repositories\MessageRepository;
-use App\Repositories\NoteRepository;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 

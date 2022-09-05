@@ -25,23 +25,9 @@ class ErrorRequest extends FormRequest
     {
         return [
             'uuid' => ['bail', 'required', 'uuid', 'exists:customer_project,uuid'],
-            'url' => ['required', 'string'],
+            'route' => ['required', 'string'],
             'request_data' => ['required', 'array'],
             'error_data' => ['required', 'array']
-
-            // 'aditional_data' => ['json'],
-            // 'raw_body' => ['json'],
-            // 'server' => ['json'],
-            // 'request' => ['json'],
-            // 'session' => ['json'],
-            // 'cookie' => ['json'],
-            // 'headers' => ['json'],
-
-            // 'message' => ['string'],
-            // 'line' => ['integer'],
-            // 'code' => ['integer'],
-            // 'file' => ['string'],
-            // 'trace' => ['json'],
         ];
     }
 }

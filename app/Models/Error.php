@@ -16,7 +16,7 @@ class Error extends Model implements Messageable, Logable
      *
      * @var array
      */
-    protected $fillable = ['code', 'message', 'file', 'line', 'url', 'trace'];
+    protected $fillable = ['code', 'message', 'file', 'line', 'route', 'trace'];
 
     /**
      * Get all of the error's logs.

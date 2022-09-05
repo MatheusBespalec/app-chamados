@@ -1,11 +1,13 @@
 <script setup>
 
+import UserBadgeIcon from '@/Icons/UserBadgeIcon';
 import SecurityIcon from '@/Icons/SecurityIcon';
 import ProjectIcon from '@/Icons/ProjectIcon';
 import SettingIcon from '@/Icons/SettingIcon';
 import ErrorIcon from '@/Icons/ErrorIcon';
-import CallIcon from '@/Icons/CallIcon';
 import UsersIcon from '@/Icons/UsersIcon';
+import FilesIcon from '@/Icons/FilesIcon';
+import CallIcon from '@/Icons/CallIcon';
 import UserIcon from '@/Icons/UserIcon';
 import MenuIcon from '@/Icons/MenuIcon';
 import ExitIcon from '@/Icons/ExitIcon';
@@ -59,6 +61,14 @@ export default {
                     </li>
                 </Link>
 
+                <Link :href="route('logs.index')">
+                    <li id="logs">
+                        <span></span>
+                        <FilesIcon size="16" />
+                        Logs
+                    </li>
+                </Link>
+
                 <Link :href="route('attacks.index')">
                     <li id="attacks">
                         <span></span>
@@ -93,6 +103,13 @@ export default {
                         <span></span>
                         <UsersIcon size="16" />
                         Clientes
+                    </li>
+                </Link>
+                <Link :href="route('users.index')">
+                    <li id="users">
+                        <span></span>
+                        <UserBadgeIcon size="16" />
+                        Usuarios
                     </li>
                 </Link>
             </ul>

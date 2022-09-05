@@ -16,7 +16,7 @@ class Attack extends Model implements Messageable, Logable
      *
      * @var array
      */
-    protected $fillable = ['description', 'url'];
+    protected $fillable = ['description', 'route'];
 
     /**
      * Get all of the attacks logs.

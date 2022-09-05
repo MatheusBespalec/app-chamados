@@ -9,7 +9,7 @@ class AttackEntity extends Entity
     public function __construct(array $errorData)
     {
         Validator::make($errorData, [
-            'url' => ['required', 'integer'],
+            'route' => ['required', 'string'],
             'description' => ['required', 'string'],
         ])->validate();
 

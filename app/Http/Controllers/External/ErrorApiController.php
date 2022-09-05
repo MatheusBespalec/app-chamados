@@ -17,6 +17,6 @@ class ErrorApiController extends ApiController
 
         $pivot = CustomerProject::query()->whereUuid($request->uuid)->with(['customer', 'project'])->first();
         $repository->insertOrUpdate($errorEntity, $logEntity, $request->url, $pivot->customer, $pivot->project);
-        return $this->response(httpStatus: 201);
+        return $this->response(httpStatus: 204);
     }
 }

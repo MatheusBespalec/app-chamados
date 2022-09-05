@@ -1,14 +1,15 @@
 <script setup>
 
+import FormGroup from '@/Components/Form/FormGroup';
+import Select from '@/Components/Form/Select';
 import Label from '@/Components/Form/Label';
 import Input from '@/Components/Form/Input';
-import FormGroup from '@/Components/Form/FormGroup';
-import Table from '@/Components/Table';
-import EyeIcon from '@/Icons/EyeIcon';
 import Breadcrumb from '@/Components/Breadcrumb';
-import Button from '@/Components/Button';
 import MainTitle from '@/Components/MainTitle';
 import Paginate from '@/Components/Paginate'
+import Button from '@/Components/Button';
+import Table from '@/Components/Table';
+import EyeIcon from '@/Icons/EyeIcon';
 import { Link, usePage, useForm } from '@inertiajs/inertia-vue3';
 
 const params = new URLSearchParams(window.location.search)
@@ -17,6 +18,8 @@ const filter = useForm({
     url: params.get('url'),
     from: params.get('from'),
     until: params.get('until'),
+    project: params.get('project') || 0,
+    customer: params.get('customer') || 0,
     description: params.get('description')
 });
 
@@ -46,7 +49,7 @@ const breadcrumb = [
             </FormGroup>
 
             <FormGroup class="col-sm-4">
-                <Label id="url" value="Url: " />
+                <Label id="url" value="Rota: " />
                 <Input id="url" @change="updateList" v-model="filter.url" />
             </FormGroup>
 
@@ -55,12 +58,22 @@ const breadcrumb = [
                 <Input id="description" @change="updateList" v-model="filter.description" />
             </FormGroup>
 
-            <FormGroup class="col-sm-6">
+            <FormGroup class="col-sm-3">
+                <Label id="file" value="Projeto: " />
+                <Select placeholder="Selecione..." @change="updateList" :resources="$page.props.projects" v-model="filter.project" />
+            </FormGroup>
+
+            <FormGroup class="col-sm-3">
+                <Label id="file" value="Cliente: " />
+                <Select placeholder="Selecione..." @change="updateList" :resources="$page.props.customers" v-model="filter.customer" />
+            </FormGroup>
+
+            <FormGroup class="col-sm-3">
                 <Label id="from" value="De: " />
                 <Input type="date" id="from" @change="updateList" v-model="filter.from" />
             </FormGroup>
 
-            <FormGroup class="col-sm-6">
+            <FormGroup class="col-sm-3">
                 <Label id="until" value="Até: " />
                 <Input type="date" id="until" @change="updateList" v-model="filter.until" />
             </FormGroup>

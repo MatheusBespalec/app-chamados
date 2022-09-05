@@ -88,7 +88,7 @@ const details = [
                         }) }}
                     </td>
                     <td>
-                        <Link :href="route('attacks.log', { log: log.id })">
+                        <Link :href="route('logs.show', { log: log.id })">
                             <Button type="button" color="primary" classes="btn-sm">
                                 <EyeIcon size="15" />
                             </Button>

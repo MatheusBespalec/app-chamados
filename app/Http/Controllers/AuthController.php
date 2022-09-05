@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Internal;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;

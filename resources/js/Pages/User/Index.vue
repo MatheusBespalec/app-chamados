@@ -11,7 +11,7 @@ import { Link, usePage } from '@inertiajs/inertia-vue3';
 
 const breadcrumb = [
     {
-        text: 'Usuarios',
+        text: 'Usuários',
     }
 ];
 
@@ -21,7 +21,7 @@ const breadcrumb = [
     <Breadcrumb :items="breadcrumb" />
 
     <section class="content">
-        <MainTitle title="Ataques" />
+        <MainTitle title="Usuários" />
 
         <div class="row">
             <div class="col-12 mb-3">

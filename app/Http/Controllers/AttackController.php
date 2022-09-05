@@ -1,16 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Internal;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\AttackRequest;
 use App\Http\Requests\MessageStoreRequest;
 use App\Models\Attack;
 use App\Models\Customer;
 use App\Models\Log;
-use App\Repositories\AttackRepository;
+use App\Models\Project;
 use App\Repositories\MessageRepository;
-use App\Repositories\NoteRepository;
 use Illuminate\Http\Request;
 
 class AttackController extends Controller
@@ -22,6 +19,8 @@ class AttackController extends Controller
      */
     public function index(Request $request)
     {
+        $projects = Project::all();
+        $customers = Customer::all();
         $query = Attack::query();
 
         if ($request->id) {
@@ -37,11 +36,11 @@ class AttackController extends Controller
         }
 
         if ($request->until) {
-            $query->where('until', '<=', "%{$request->until}% 23:59:59");
+            $query->where('updated_at', '<=', "{$request->until} 23:59:59");
         }
 
         $attacks = $query->paginate(10);
-        return inertia('Attack/Index', compact('attacks'));
+        return inertia('Attack/Index', compact('attacks', 'customers', 'projects'));
     }
 
     /**

@@ -11,13 +11,8 @@ const log = usePage().props.value.log;
 
 const breadcrumb = [
     {
-        text: 'Erros',
+        text: 'Logs',
         route: 'errors.index'
-    },
-    {
-        text: `Erro ${log.logable.id}`,
-        route: 'errors.show',
-        params: [log.logable.id]
     },
     {
         text: `Log ${log.id}`
@@ -31,7 +26,7 @@ const dataList = [
         data: log.raw_body,
     },
     {
-        name: '$_SERVER',
+        name: 'Server',
         description: 'Informação do servidor e ambiente de execução',
         data: log.server,
     },
@@ -51,9 +46,9 @@ const dataList = [
         data: log.additional_data,
     },
     {
-        name: 'Trilha',
-        description: 'Caminho do log',
-        data: log.trace,
+        name: 'Sessão',
+        description: 'Dados de Sessão',
+        data: log.session,
     }
 ];
 
@@ -64,8 +59,10 @@ const dataList = [
 
     <Content>
         <div class="row">
-            <MainTitle :title="`Log de Erro ${log.id}`" />
-
+            <MainTitle :title="`Log ${log.id}`" />
+            <Link :href="route(`${$page.props.originRoute}.show`, log.logable_id)">
+                Origem
+            </Link>
             <div class="col-12">
                 <h2>Dados</h2>
                 <DataList :content="dataList" />

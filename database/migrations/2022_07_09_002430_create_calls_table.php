@@ -19,6 +19,7 @@ return new class extends Migration
     {
         Schema::create('calls', function (Blueprint $table) {
             $table->id();
+            $table->string('webhook');
             $table->string('title');
             $table->string('from');
             $table->uuid();

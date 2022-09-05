@@ -2,15 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Whitelist as ModelsWhitelist;
 use Closure;
 use Illuminate\Http\Request;
 
-class AllowedIps
+class Whitelist
 {
-    public function allowedIps()
-    {
-        return ['127.0.0.1'];
-    }
     /**
      * Handle an incoming request.
      *
@@ -20,7 +17,8 @@ class AllowedIps
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!in_array($request->ip(), $this->allowedIps())) {
+        $ip = ModelsWhitelist::query()->where('ip', $request->ip())->first();
+        if (is_null($ip)) {
             return response(status: 401);
         }
 

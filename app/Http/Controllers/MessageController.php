@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Internal;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Message;
 
 class MessageController extends Controller
