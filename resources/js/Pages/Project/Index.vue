@@ -32,10 +32,12 @@ const breadcrumb = [
                     <tr v-for="(project, index) in $page.props.projects.data" :key="index">
                         <td>{{ project.id }}</td>
                         <td>{{ project.name }}</td>
-                        <td>{{ project.modules_count }}</td>
                         <td>{{ project.customers_count }}</td>
                         <td>
-                            <Link :href="route('projects.show', project.id)">
+                            <Link :href="typeof project.private_route == 'string'
+                                ? route(`${project.private_route}.index`)
+                                : route('projects.show', project.id)"
+                            >
                                 <Button type="button" color="primary" classes="btn-sm">
                                     <EyeIcon size="15" />
                                 </Button>

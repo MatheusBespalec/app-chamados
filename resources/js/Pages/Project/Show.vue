@@ -68,7 +68,11 @@ const saveNewModule = () => {
                 <Table :headers="['ID', 'Nome', 'UUID', '']">
                     <tr v-for="(customer, index) in $page.props.customers.data" :key="index">
                         <td>{{ customer.id }}</td>
-                        <td>{{ customer.name }}</td>
+                        <td>
+                            <Link :href="route('customers.show', { customer: customer.id })">
+                                {{ customer.name }}
+                            </Link>
+                        </td>
                         <td>{{ customer.pivot.uuid }}</td>
                         <td>
                             <Link :href="route('customers.show', { customer: customer.id })">

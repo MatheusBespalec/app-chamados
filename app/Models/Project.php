@@ -14,7 +14,7 @@ class Project extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'private_route'];
 
     /**
      * Indicates if the model should be timestamped.
@@ -22,14 +22,6 @@ class Project extends Model
      * @var bool
      */
     public $timestamps = false;
-
-    /**
-     * Get the modules for the project.
-     */
-    public function modules()
-    {
-        return $this->hasMany(Module::class);
-    }
 
     /**
      * The customers that belong to the project.

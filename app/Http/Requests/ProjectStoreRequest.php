@@ -26,7 +26,7 @@ class ProjectStoreRequest extends FormRequest
     {
         return [
             'name' => ['bail', 'required', 'string', 'unique:projects,name'],
-            'modules' => ['array']
+            'private_route' => ['bail', 'nullable', 'string'],
         ];
     }
 }

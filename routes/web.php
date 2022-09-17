@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttackController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BancoDigitalController;
 use App\Http\Controllers\CallController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
@@ -72,6 +73,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/projetos/{project}', 'show')->name('show')->whereNumber('project');
         Route::get('/projetos/novo', 'create')->name('create');
         Route::post('/projetos/novo', 'store')->name('store');
+    });
+
+    Route::controller(BancoDigitalController::class)->name('banco-digital.')->group(function () {
+        Route::get('/banco-digital', 'index')->name('index');
+        Route::get('/banco-digital/{customer}', 'show')->name('show');
     });
 
     Route::controller(CustomerController::class)->name('customers.')->group(function () {

@@ -6,16 +6,9 @@ use App\Models\Project;
 
 class ProjectRepository
 {
-    public function create(string $name, array $modules): Project
+    public function create(string $name, ?string $privateRoute): Project
     {
-        $project = Project::create(['name' => $name]);
-
-        $project->modules()->insert(array_map(fn ($module) => [
-            'name' => $module['name'],
-            'description' => $module['description'],
-            'project_id' => $project->id
-        ], $modules));
-
+        $project = Project::create(['name' => $name, 'private_route' => $privateRoute]);
         return $project;
     }
 }
