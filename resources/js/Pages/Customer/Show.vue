@@ -97,7 +97,7 @@ const breadcrumb = [
                         <td>{{ project.pivot.uuid }}</td>
                         <td>
                             <Link :href="typeof project.private_route == 'string'
-                                ? route(`${project.private_route}.index`)
+                                ? route(`${project.private_route}.show`, { customer: customer.id })
                                 : route('projects.show', project.id)"
                             >
                                     <Button type="button" color="primary" classes="btn-sm">
@@ -125,21 +125,19 @@ const breadcrumb = [
                     : 'bg-info text-dark float-start'"
             />
 
-            <div class="border rounded-circle">
-                <div class="mb-3">
-                    <input class="form-control" type="file" @input="message.file = $event.target.files[0]">
-                </div>
+            <div class="mb-3">
+                <input class="form-control" type="file" @input="message.file = $event.target.files[0]">
+            </div>
 
-                <div class="mb-3 input-group">
-                    <span class="input-group-text">Mensagem</span>
-                    <textarea class="form-control" v-model="message.text" placeholder="Adicione uma mensagem ..."></textarea>
-                </div>
+            <div class="mb-3 input-group">
+                <span class="input-group-text">Mensagem</span>
+                <textarea class="form-control" v-model="message.text" placeholder="Adicione uma mensagem ..."></textarea>
+            </div>
 
-                <div class="mb-3">
-                    <button class="btn btn-outline-primary w-100" type="button" @click="createNewMessage">
-                        Salvar <SendIcon />
-                    </button>
-                </div>
+            <div class="mb-3">
+                <button class="btn btn-outline-primary w-100" type="button" @click="createNewMessage">
+                    Salvar <SendIcon />
+                </button>
             </div>
         </div><!-- col-12 -->
     </Content>

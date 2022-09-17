@@ -28,7 +28,7 @@ const breadcrumb = [
                 <Link :href="route('projects.create')" class="btn btn-primary">Novo Projeto</Link>
             </div><!-- col-12 -->
             <div class="col-12">
-                <Table :headers="['ID', 'Nome', 'Módulos', 'Clientes', '']">
+                <Table :headers="['ID', 'Nome', 'Clientes', '']">
                     <tr v-for="(project, index) in $page.props.projects.data" :key="index">
                         <td>{{ project.id }}</td>
                         <td>{{ project.name }}</td>

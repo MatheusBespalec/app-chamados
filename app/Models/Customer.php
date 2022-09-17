@@ -39,4 +39,9 @@ class Customer extends Model implements Messageable
     {
         return $this->belongsToMany(Project::class)->withPivot(['uuid']);
     }
+
+    public function logs()
+    {
+        return $this->hasMany(Log::class);
+    }
 }

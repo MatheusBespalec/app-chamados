@@ -84,7 +84,7 @@ const resetFilters = () => {
                         <td>{{ log.id }}</td>
                         <td>{{ log.customer.name }}</td>
                         <td>{{ log.project.name }}</td>
-                        <td>{{ (new Date(log.created_at)).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }) }}</td>
+                        <td>{{ Formatter.asDateTime(log.created_at) }}</td>
                         <td>
                             <Link :href="route('logs.show', { log: log.id })">
                                 <Button type="button" color="primary" classes="btn-sm">
@@ -95,7 +95,7 @@ const resetFilters = () => {
                     </tr>
                 </Table>
 
-                <Paginate :links="$page.props.errors.links" />
+                <Paginate :links="$page.props.logs.links" />
             </div>
         </div><!-- com-md-12 -->
     </Content>

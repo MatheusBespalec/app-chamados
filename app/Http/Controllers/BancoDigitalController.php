@@ -23,8 +23,9 @@ class BancoDigitalController extends Controller
         ]);
     }
 
-    public function show(Customer $customer)
+    public function show(int $customerId)
     {
+        $customer = Customer::query()->whereId($customerId)->with('logs')->first();
         return inertia('Project/BancoDigital/Show', [
             'project' => $this->project,
             'customer' => $customer

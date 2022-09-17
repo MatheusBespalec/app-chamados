@@ -19,7 +19,7 @@ return new class extends Migration
             $table->uuid();
             $table->foreignIdFor(Customer::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(Project::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->boolean('status');
+            $table->boolean('status')->default(false);
             $table->primary(['customer_id', 'project_id']);
         });
     }
