@@ -41,11 +41,15 @@
                 </div><!-- col-12 -->
 
                 <div class="col-12">
-                    <Link href="" class="btn btn-danger btn-sm me-2">
+                    <Link :href="route('banco-digital.disableVans')" class="btn btn-danger btn-sm m-2" method="post" as="button">
                         Desabilitar Vans
                     </Link>
 
-                    <Link href="" class="btn btn-success btn-sm">
+                    <Link :href="route('banco-digital.disableDebugs')" class="btn btn-danger btn-sm m-2" method="post" as="button">
+                        Desabilitar Debugs
+                    </Link>
+
+                    <Link :href="route('banco-digital.enableIpDebugs')" class="btn btn-success btn-sm m-2" method="post" as="button">
                         Habilitar IP para Debugs
                     </Link>
                 </div>

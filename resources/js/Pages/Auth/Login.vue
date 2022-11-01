@@ -14,19 +14,6 @@
         password: '',
         remember: true
     })
-        //import { Toast } from 'bootstrap'
-        // const submit = () => {
-        //     form.post(route('signIn'), {
-        //         onError: () => {
-        //             let toastElList = [].slice.call(document.querySelectorAll('.toast'))
-        //             let toastList = toastElList.map(function(toastEl) {
-        //                 return new Toast(toastEl)
-        //             })
-        //             toastList.forEach(toast => toast.show())
-        //         },
-        //         onFinish: () => form.reset('password'),
-        //     });
-        // };
     const submit = () => {
         form.post(route('signIn'), {
             onFinish: () => {
@@ -38,6 +25,40 @@
 </script>
 
 <template>
+    <div class="toast-container position-fixed top-0 end-0 p-3 z-index-3" id="toast-container">
+        <div  v-if="$page.props.flash.success" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header text-success">
+                <strong class="me-auto">Mensagem do Sistema</strong>
+                <small>Agora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{ $page.props.flash.success }}
+            </div>
+        </div>
+
+        <div  v-if="$page.props.flash.error" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header text-danger">
+                <strong class="me-auto">Mensagem do Sistema</strong>
+                <small>Agora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{ $page.props.flash.error }}
+            </div>
+        </div>
+
+        <div  v-if="$page.props.flash.warning" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header text-warning">
+                <strong class="me-auto">Mensagem do Sistema</strong>
+                <small>Agora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{ $page.props.flash.warning }}
+            </div>
+        </div>
+    </div>
     <div class="container h-100">
         <div class="row h-100 justify-content-center align-items-center mt-5">
             <div class="col-10 col-md-6 position-absolute top-50 start-50 translate-middle" style="max-width: 450px">

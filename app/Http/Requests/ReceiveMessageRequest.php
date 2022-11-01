@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Helpers\HttpStatusHelper\FileHelper;
+use App\Helpers\FileHelper;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
@@ -30,15 +30,17 @@ class ReceiveMessageRequest extends FormRequest
         }
 
         $fileData = base64_decode($this->file);
+
         if ($fileData) {
             $file = FileHelper::transformBase64ToFileToUploadedFile($fileData);
             $this->merge([
                 'file' => $file,
             ]);
+            return;
         }
 
         throw ValidationException::withMessages([
-            'file' => trans('validation.base64'),
+            'file' => 'O campo file não contém um base64 válido.',
         ]);
     }
 

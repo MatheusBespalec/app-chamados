@@ -32,8 +32,9 @@ class ApiController extends Controller
                         : null,
                     'message' => HttpHelper::$listOfStatus[$httpStatus]
                 ]
-            ],
+            ]),
+            $httpStatus,
             $headers
-        ));
+        );
     }
 }

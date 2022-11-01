@@ -55,7 +55,7 @@ const details = [
         value: error.code
     },
     {
-        name: 'Path',
+        name: 'Url',
         value: error.url
     }
 ]

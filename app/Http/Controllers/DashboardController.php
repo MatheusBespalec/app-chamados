@@ -13,7 +13,7 @@ class DashboardController extends Controller
 {
     public function home(Request $request)
     {
-        $allowedIps = Whitelist::query()->whereNull('expiration')->orWhere('expiration', '>=', now())->orderBy('expiration')->get();
+        $allowedIps = Whitelist::query()->notExpired()->orderBy('expiration')->get();
 
         $attacksQtd = Attack::query()
             ->where('updated_at', '>=', ($request?->from ?? date('Y-m-d')) . ' 00:00:00')

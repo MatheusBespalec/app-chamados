@@ -8,6 +8,7 @@ import Paginate from '@/Components/Paginate';
 import Content from '@/Components/Content';
 import Button from '@/Components/Button';
 import Table from '@/Components/Table';
+import Formatter from '@/Helpers/Formatter';
 import SendIcon from '@/Icons/SendIcon';
 import EyeIcon from '@/Icons/EyeIcon';
 import { Link, usePage, useForm } from '@inertiajs/inertia-vue3';
@@ -39,7 +40,7 @@ const breadcrumb = [
         route: 'attacks.index'
     },
     {
-        text: `${attack.controller} | ${attack.action}`
+        text: `Ataque ${attack.id}`
     }
 ];
 
@@ -49,8 +50,8 @@ const details = [
         value: attack.description
     },
     {
-        name: 'Url',
-        value: attack.url
+        name: 'Rota',
+        value: attack.route
     }
 ];
 
@@ -60,7 +61,7 @@ const details = [
     <Breadcrumb :items="breadcrumb" />
     <Content>
         <div class="col-12">
-            <MainTitle :title="`Tentativas de ataque em: ${attack.controller} / ${attack.action}`" />
+            <MainTitle :title="`Ataque ${attack.id}`" />
         </div><!-- col-12 -->
 
         <div class="col-12">
@@ -72,21 +73,11 @@ const details = [
         <div class="col-md-12">
             <h2>Registro de Ocorrências</h2>
 
-            <Table :headers="['ID', 'Cliente', 'Método','Data', '']">
+            <Table :headers="['ID', 'Cliente','Data', '']">
                 <tr v-for="(log, key) in $page.props.logs.data" :key="key">
                     <td>{{ log.id }}</td>
                     <td>{{ log.customer.name }}</td>
-                    <td>{{ log.method }}</td>
-                    <td>
-                        {{ (new Date(log.created_at)).toLocaleDateString('pt-BR', {
-                                day: '2-digit',
-                                month: '2-digit',
-                                year: 'numeric',
-                                hour: '2-digit',
-                                minute: '2-digit',
-                                second: '2-digit'
-                        }) }}
-                    </td>
+                    <td>{{ Formatter.asDate(log.created_at) }}</td>
                     <td>
                         <Link :href="route('logs.show', { log: log.id })">
                             <Button type="button" color="primary" classes="btn-sm">
@@ -115,7 +106,7 @@ const details = [
                     : 'bg-info text-dark float-start'"
             />
 
-            <div class="border rounded-circle">
+            <div class="rounded-circle">
                 <div class="mb-3">
                     <input class="form-control" type="file" @input="message.file = $event.target.files[0]">
                 </div>

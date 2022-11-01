@@ -12,10 +12,14 @@ import UserIcon from '@/Icons/UserIcon';
 import MenuIcon from '@/Icons/MenuIcon';
 import ExitIcon from '@/Icons/ExitIcon';
 import DashboardIcon from "@/Icons/DashboardIcon";
-import { Link } from '@inertiajs/inertia-vue3'
+import { Link, usePage } from '@inertiajs/inertia-vue3'
 import { onMounted, onUpdated } from 'vue';
 
 onMounted(() => {
+    if (window.innerWidth) {
+        $('menu').addClass('close');
+    }
+
     const currentMenu = route().current().split('.')[0];
     $(`#${currentMenu}`).addClass('active');
 })
@@ -32,25 +36,55 @@ onUpdated(() => {
 export default {
     methods: {
         menuToggle() {
-            if (this.$store.state.menuOpen) {
-                $('#menu nav').css('opacity', '0');
-                $('#menu').css('left', '-180px');
-            } else {
-                $('#menu nav').css('opacity', '1');
-                $('#menu').css('left', '0');
-            }
-            this.$store.dispatch('switchMenuState')
+            $('#menu').toggleClass("close");
         }
     }
 }
+
 </script>
 
 <template>
+    <div class="toast-container position-fixed top-0 end-0 p-3 z-index-3" style="z-index: 10000" id="toast-container">
+        <div  v-if="$page.props.flash.success" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header text-success">
+                <strong class="me-auto">Mensagem do Sistema</strong>
+                <small>Agora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{ $page.props.flash.success }}
+            </div>
+        </div>
+
+        <div  v-if="$page.props.flash.error" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header text-danger">
+                <strong class="me-auto">Mensagem do Sistema</strong>
+                <small>Agora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{ $page.props.flash.error }}
+            </div>
+        </div>
+
+        <div  v-if="$page.props.flash.warning" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header text-warning">
+                <strong class="me-auto">Mensagem do Sistema</strong>
+                <small>Agora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{ $page.props.flash.warning }}
+            </div>
+        </div>
+    </div>
+
     <aside id="menu">
         <header class="top">
             <h1>Consulting</h1>
             <MenuIcon size="35" classes="menu-icon" @click="menuToggle" />
         </header>
+
         <nav>
             <ul>
                 <Link :href="route('dashboard')">
@@ -114,7 +148,6 @@ export default {
                 </Link>
             </ul>
         </nav>
-
         <footer>
             <div class="user">
                 <div class="img border border-light text-light">
@@ -123,7 +156,7 @@ export default {
                 </div>
                 <Link class="info text-light" :href="route('users.profile')">
                     <h4>{{ $page.props.auth.user.name }}</h4>
-                    <h5>Administrador</h5>
+                    <h5 v-if="$page.props.auth.user.isAdmin == 1">Administrador</h5>
                 </Link>
                 <!-- <div class="btn-group dropup">
                     <div class="d-flex flex-wrap pt-2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -159,7 +192,7 @@ export default {
                 </div> -->
             </div>
             <div class="icon">
-                <Link :href="route('logout')"  method="post" class="text-light">
+                <Link :href="route('logout')"  method="post" class="text-light border-0 bg-transparent" as="button">
                     <ExitIcon size="23" />
                 </Link>
             </div>

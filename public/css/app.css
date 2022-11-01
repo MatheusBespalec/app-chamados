@@ -14343,6 +14343,16 @@ a {
   text-decoration: none;
 }
 
+#menu.close {
+  left: -180px;
+}
+#menu.close nav {
+  opacity: 0;
+}
+#menu.close ~ main {
+  width: calc(100vw - 270px + 180px);
+}
+
 aside#menu {
   position: fixed;
   top: 0;
@@ -14470,6 +14480,7 @@ main {
   min-height: 100vh;
   width: calc(100vw - 270px);
   overflow: hidden;
+  transition: 1s;
 }
 main .content {
   margin-top: 30px;

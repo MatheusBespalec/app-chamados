@@ -27,8 +27,12 @@ class AttackController extends Controller
             $query->where('id', 'like', "%{$request->id}%");
         }
 
-        if ($request->url) {
-            $query->where('url', 'like', "%{$request->url}%");
+        if ($request->route) {
+            $query->where('route', 'like', "%{$request->route}%");
+        }
+
+        if ($request->description) {
+            $query->where('description', 'like', "%{$request->description}%");
         }
 
         if ($request->from) {
@@ -39,7 +43,7 @@ class AttackController extends Controller
             $query->where('updated_at', '<=', "{$request->until} 23:59:59");
         }
 
-        $attacks = $query->paginate(10);
+        $attacks = $query->orderBy('id', 'desc')->paginate(10);
         return inertia('Attack/Index', compact('attacks', 'customers', 'projects'));
     }
 

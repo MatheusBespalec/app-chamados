@@ -2,21 +2,28 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Message extends Model
 {
     use HasFactory;
-
+    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['file_path', 'text', 'from', 'external', 'user_id', 'messageable_type', 'messageable_id'];
+    protected $fillable = [
+        'file_path',
+        'text',
+        'from',
+        'external',
+        'user_id',
+        'messageable_type',
+        'messageable_id'
+    ];
 
     /**
      * Get the parent noteable model.

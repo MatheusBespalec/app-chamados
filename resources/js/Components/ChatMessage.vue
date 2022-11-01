@@ -2,12 +2,19 @@
 
 import UserIcon from '@/Icons/UserIcon';
 import DowloadIcon from '@/Icons/DowloadIcon';
+import TrashIcon from '@/Icons/TrashIcon';
+import { Link } from '@inertiajs/inertia-vue3';
 
 const props = defineProps({
     text: String,
     author: Object,
     classes: String,
     file: String,
+    canDelete: {
+        type: Boolean,
+        default: true
+    },
+    id: Number,
     color: {
         type: String,
         default: 'secondary'
@@ -29,8 +36,13 @@ const isImage = (path) => {
                     <UserIcon size="30" />
                 </div><!-- avatar-img me-2 -->
             </div><!-- avatar-img -->
-            <div class="note">
-                <h3 class="h5">{{ author.name }}</h3>
+            <div class="note w-100">
+                <div class="d-flex justify-content-between">
+                    <h3 class="h5">{{ author.name }}</h3>
+                    <Link v-if="canDelete" :href="route('messages.destroy', { message: id })" class="text-light border-0 bg-transparent" as="button" method="delete">
+                        <TrashIcon />
+                    </Link>
+                </div>
                 <p class="m-0">{{ text }}</p>
                 <div v-if="file">
                     <img v-if="isImage(file)" style="max-width: 300px; width: 100%" :src="route('storage', { filePath: file })" class="mb-2">

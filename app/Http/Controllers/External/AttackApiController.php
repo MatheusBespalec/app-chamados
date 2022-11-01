@@ -16,7 +16,7 @@ class AttackApiController extends ApiController
         $logEntity = new LogEntity($request->request_data);
 
         $pivot = CustomerProject::query()->whereUuid($request->uuid)->with(['customer', 'project'])->first();
-        $repository->insertOrUpdate($attackEntity, $logEntity, $pivot->customer, $pivot->project);
+        $repository->insertOrUpdate($attackEntity, $logEntity, $pivot->project, $pivot->customer);
         return $this->response(httpStatus: 204);
     }
 }

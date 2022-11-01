@@ -47,14 +47,16 @@ const createNewMessage = () => {
             <div class="col-12">
                 <ChatMessage
                     v-for="(message, index) in $page.props.call.messages"
+                    :id="message.id"
                     :key="index"
+                    :canDelete="false"
                     :text="message.text"
                     :file="message.file_path"
                     :color="message.user_id == $page.props.auth.user.id ? 'light' : 'secondary'"
-                    :author="{ name: message.user.name ?? message.from }"
+                    :author="{ name: message.user == null ? message.from : message.user.name }"
                     :classes="message.user_id == $page.props.auth.user.id
                         ? 'bg-primary text-white float-end'
-                        : 'bg-info text-dark float-start'"
+                        : 'bg-light text-dark float-start'"
                 />
 
                 <div class="mb-3">

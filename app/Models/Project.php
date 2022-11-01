@@ -30,4 +30,12 @@ class Project extends Model
     {
         return $this->belongsToMany(Customer::class)->withPivot(['uuid']);
     }
+
+    /**
+     * The customers that belong to the project.
+     */
+    public function bancosDigitais()
+    {
+        return $this->hasOne(BancoDigital::class);
+    }
 }

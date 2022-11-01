@@ -20,4 +20,17 @@ class Whitelist extends Model
         'expiration',
         'description',
     ];
+
+    public function scopeNotExpired($query)
+    {
+        $query->where(function($query) {
+            $query->whereNull('expiration')
+                ->orWhere('expiration', '>=', date('Y-m-d'));
+        });
+    }
+
+    public static function checkIp($ip): bool
+    {
+        return self::query()->notExpired()->whereIp($ip)->count() > 0;
+    }
 }

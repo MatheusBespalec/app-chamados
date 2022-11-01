@@ -24,6 +24,7 @@ return new class extends Migration
             $table->foreignId('messageable_id');
             $table->string('messageable_type');
             $table->foreignIdFor(User::class)->nullable()->constrained()->restrictOnDelete()->restrictOnUpdate();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

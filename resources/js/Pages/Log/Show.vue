@@ -12,7 +12,7 @@ const log = usePage().props.value.log;
 const breadcrumb = [
     {
         text: 'Logs',
-        route: 'errors.index'
+        route: 'logs.index'
     },
     {
         text: `Log ${log.id}`
@@ -20,6 +20,11 @@ const breadcrumb = [
 ];
 
 const dataList = [
+    {
+        name: 'Dados',
+        description: 'Dados adicionais adicionados',
+        data: log.additional_data,
+    },
     {
         name: 'Body',
         description: 'Body da Requisição',
@@ -39,11 +44,6 @@ const dataList = [
         name: 'Header',
         description: 'Headers da requisição',
         data: log.headers,
-    },
-    {
-        name: 'Dados',
-        description: 'Dados adicionais adicionados ao log',
-        data: log.additional_data,
     },
     {
         name: 'Sessão',

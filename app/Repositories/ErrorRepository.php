@@ -10,12 +10,12 @@ use App\Models\Project;
 
 class ErrorRepository
 {
-    public function insertOrUpdate(ErrorEntity $errorEntity, LogEntity $logEntity, string $url, Customer $customer, Project $project): Error
+    public function insertOrUpdate(ErrorEntity $errorEntity, LogEntity $logEntity, string $route, Customer $customer, Project $project): Error
     {
         $error = Error::query()
             ->whereMessage($errorEntity->get('message'))
             ->whereLine($errorEntity->get('line'))
-            ->whereUrl($url)
+            ->whereRoute($route)
             ->first();
 
         if (is_null($error)) {
@@ -24,7 +24,7 @@ class ErrorRepository
                 'file' => $errorEntity->get('file'),
                 'code' => $errorEntity->get('code'),
                 'line' => $errorEntity->get('line'),
-                'url' => $url,
+                'route' => $route,
             ]);
         }
 
@@ -33,7 +33,8 @@ class ErrorRepository
             $logEntity->get('request'),
             $logEntity->get('server'),
             $logEntity->get('headers'),
-            $logEntity->get('trace'),
+            $logEntity->get('session'),
+            $logEntity->get('additional_data'),
             $error,
             $customer,
             $project,

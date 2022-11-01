@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Conections\BancoDigital\Modules\HelpDesk;
 use App\Http\Requests\MessageStoreRequest;
 use App\Models\Call;
 use App\Repositories\CallRepository;
 use App\Repositories\MessageRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class CallController extends Controller
 {
     public function index()
     {
-        $calls = Call::query()->with(['project', 'customer'])->paginate(10);
+        $calls = Call::query()->orderBy('id', 'desc')->with(['project', 'customer'])->paginate(10);
         return Inertia::render('Call/Index', compact('calls'));
     }
 
@@ -46,10 +48,17 @@ class CallController extends Controller
         return redirect()->back();
     }
 
-    public function sendMessage(MessageRepository $repository, Call $call, MessageStoreRequest $request)
+    public function sendMessage(MessageRepository $repository, Call $call, MessageStoreRequest $request, HelpDesk $helpDesk)
     {
-        $repository->sendExternalMessage($call, $request?->text, $request?->file);
-        return redirect()->back()->with('success', 'Mensagem enviada com sucesso!');
+        session()->flash('error', 'Houve um erro ao enviar a mensagem');
+        DB::transaction(function () use ($repository, $helpDesk, $call, $request) {
+            $message = $repository->saveExternalMessage($call, $request?->text, $request?->file);
+            $helpDesk->sendCallMessage($message, $call);
+            session()->flash('success', 'Mensagem enviada com sucesso!');
+
+        });
+
+        return redirect()->back();
     }
 
     public function finish(CallRepository $callRepository, Call $call)

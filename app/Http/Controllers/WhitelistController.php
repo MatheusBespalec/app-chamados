@@ -15,8 +15,9 @@ class WhitelistController extends Controller
         if (isset($request->expiration)) {
             $expiration = new DateTimeImmutable($request->expiration);
         }
+
         $repository->create($request->ip, $expiration, $request->description);
-        return redirect()->back()->with('success', 'IP Liberado');
+        return redirect()->back()->with('success', 'O IP ' . $request->ip . ' foi liberado');
     }
 
     public function destroy(Whitelist $ip)

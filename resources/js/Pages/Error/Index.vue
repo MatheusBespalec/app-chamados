@@ -89,7 +89,7 @@ const resetFilters = () => {
                     <tr v-for="(error, index) in $page.props.errors.data" :key="index">
                         <td>{{ error.id }}</td>
                         <td>{{ error.code }}</td>
-                        <td>{{ error.file }}</td>
+                        <td>{{ error.file.split('/').pop() }}</td>
                         <td>{{ error.line }}</td>
                         <td>{{ error.message }}</td>
                         <td>{{ Formatter.asFullDateTime(error.updated_at) }}</td>

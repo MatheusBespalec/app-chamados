@@ -38,6 +38,11 @@ const resetFilters = () => {
     Inertia.get(route('logs.index'));
 };
 
+const logType = {
+    'App\\Models\\Attack': 'Ataque',
+    'App\\Models\\Error': 'Erro',
+}
+
 </script>
 
 <template>
@@ -79,9 +84,10 @@ const resetFilters = () => {
 
         <div class="row">
             <div class="col-12">
-                <Table :headers="['ID', 'Cliente', 'Projeto', 'Ocorrência', '']" >
+                <Table :headers="['ID', 'Tipo','Cliente', 'Projeto', 'Ocorrência', '']" >
                     <tr v-for="(log, index) in $page.props.logs.data" :key="index">
                         <td>{{ log.id }}</td>
+                        <td>{{ logType[log.logable_type] }}</td>
                         <td>{{ log.customer.name }}</td>
                         <td>{{ log.project.name }}</td>
                         <td>{{ Formatter.asDateTime(log.created_at) }}</td>

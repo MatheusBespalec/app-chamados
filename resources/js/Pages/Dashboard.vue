@@ -20,10 +20,11 @@ import { Inertia } from '@inertiajs/inertia';
 import { onMounted } from 'vue';
 
 let allowIpModal;
-console.log(usePage().props.value.whitelist)
+
 onMounted(() => {
     allowIpModal = new BoostrapModal(document.getElementById('allow-ip'));
 });
+
 const openAllowIpModal = () => {
     allowIpModal.show();
 }

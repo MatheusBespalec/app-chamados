@@ -10,7 +10,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\MessageController;
-use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\PrivateFileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
@@ -29,10 +28,11 @@ use App\Http\Controllers\WhitelistController;
 
 Route::middleware('guest')->group(function () {
     Route::get('login', [AuthController::class, 'login'])->name('login');
+    Route::get('validar-acesso', [AuthController::class, 'releaseAccess'])->name('releaseAccess');
     Route::post('login', [AuthController::class, 'signIn'])->name('signIn');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'whitelist'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'home'])->name('dashboard');
 
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
@@ -78,6 +78,15 @@ Route::middleware('auth')->group(function () {
     Route::controller(BancoDigitalController::class)->name('banco-digital.')->group(function () {
         Route::get('/banco-digital', 'index')->name('index');
         Route::get('/banco-digital/{customer}', 'show')->name('show');
+        Route::patch('/banco-digital/{customer}/editar-webhook', 'updateWebhook')->name('updateWebhook');
+        Route::patch('/banco-digital/{customer}/editar-lambda', 'updateLambda')->name('updateLambda');
+        Route::post('/banco-digital/{customer}/habilitar-ip-debug', 'enableIpDebug')->name('enableIpDebug');
+        Route::post('/banco-digital/habilitar-ip-debugs', 'enableIpDebugs')->name('enableIpDebugs');
+        Route::post('/banco-digital/desabilitar-ip-debugs', 'disableDebugs')->name('disableDebugs');
+        Route::post('/banco-digital/{customer}/habilitar-debug', 'enableDebug')->name('enableDebug');
+        Route::post('/banco-digital/{customer}/desabilitar-debug', 'disableDebug')->name('disableDebug');
+        Route::post('/banco-digital/{customer}/desabilitar-van', 'disableVan')->name('disableVan');
+        Route::post('/banco-digital/desabilitar-vans', 'disableVans')->name('disableVans');
     });
 
     Route::controller(CustomerController::class)->name('customers.')->group(function () {
@@ -89,12 +98,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/clientes/{customer}/mensagem', 'storeMessage')->name('messages.store')->whereNumber('customer');
     });
 
-    Route::controller(ModuleController::class)->name('modules.')->group(function () {
-        Route::post('/modulos/novo', 'store')->name('store');
-    });
-
     Route::controller(MessageController::class)->name('messages.')->group(function () {
-        Route::delete('/mensagems/{message}')->name('destroy');
+        Route::delete('/mensagems/{message}', 'destroy')->name('destroy');
     });
 
     Route::controller(LogController::class)->name('logs.')->group(function () {

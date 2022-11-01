@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -34,6 +35,7 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
+        Debugbar::info($request->session()->get('success'));
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
@@ -42,8 +44,9 @@ class HandleInertiaRequests extends Middleware
                 return (new Ziggy)->toArray();
             },
             'flash' => [
-                'success' => fn () => $request->session()->get('success'),
-                'error' => fn () => $request->session()->get('error')
+                'success' => $request->session()->get('success', null),
+                'warning' => $request->session()->get('warning', null),
+                'error' => $request->session()->get('error', null),
             ],
         ]);
     }

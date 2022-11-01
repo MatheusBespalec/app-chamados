@@ -30,8 +30,8 @@ class CallApiController extends ApiController
 
     public function receiveMessage(MessageRepository $repository, ReceiveMessageRequest $request)
     {
-        $call = Call::find($request->uuid);
+        $call = Call::query()->where('uuid', $request->call_uuid)->first();
         $repository->receiveExternalMessage($call, $request->from, $request?->text, $request?->file);
-
+        return $this->response(httpStatus: 201);
     }
 }

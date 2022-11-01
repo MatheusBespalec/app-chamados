@@ -15,6 +15,11 @@ class ErrorEntity extends Entity
             'file' => ['required', 'string'],
         ])->validate();
 
-        $this->data = $errorData;
+        $this->data = [
+            'message' => $errorData['message'],
+            'line' => $errorData['line'],
+            'code' => $errorData['code'],
+            'file' => $errorData['file'],
+        ];
     }
 }

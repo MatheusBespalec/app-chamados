@@ -44,4 +44,12 @@ class Customer extends Model implements Messageable
     {
         return $this->hasMany(Log::class);
     }
+
+    /**
+     * The customers that belong to the project.
+     */
+    public function bancoDigital()
+    {
+        return $this->hasOne(BancoDigital::class);
+    }
 }

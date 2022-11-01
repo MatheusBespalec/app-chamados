@@ -4,6 +4,17 @@
 
 $footer-height: 40px;
 
+#menu.close {
+    left: -180px;
+    nav {
+        opacity: 0;
+    }
+
+    ~ main {
+        width: calc(100vw - $menu-width + 180px);
+    }
+}
+
 aside#menu {
     position: fixed;
     top: 0;
@@ -153,6 +164,7 @@ main {
     min-height: 100vh;
     width: calc(100vw - $menu-width);
     overflow: hidden;
+    transition: 1s;
 
     .content {
         margin-top: 30px;

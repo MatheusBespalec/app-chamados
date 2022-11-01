@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers\HttpStatusHelper;
+namespace App\Helpers;
 
 use Symfony\Component\HttpFoundation\File\File;
 use Illuminate\Http\UploadedFile;

@@ -10,7 +10,6 @@ use App\Models\Project;
 use App\Repositories\MessageRepository;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class ErrorController extends Controller
 {
@@ -33,11 +32,10 @@ class ErrorController extends Controller
         }
 
         if ($request->until) {
-            Debugbar::info($request->until);
             $errors->where('updated_at', '<=', "{$request->until} 23:59:59");
         }
 
-        $errors = $errors->paginate(10);
+        $errors = $errors->orderBy('id', 'desc')->paginate(10);
         return inertia('Error/Index', compact('errors', 'customers', 'projects'));
     }
 

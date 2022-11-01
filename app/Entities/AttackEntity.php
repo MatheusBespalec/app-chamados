@@ -6,13 +6,16 @@ use Illuminate\Support\Facades\Validator;
 
 class AttackEntity extends Entity
 {
-    public function __construct(array $errorData)
+    public function __construct(array $attackData)
     {
-        Validator::make($errorData, [
+        Validator::make($attackData, [
             'route' => ['required', 'string'],
             'description' => ['required', 'string'],
         ])->validate();
 
-        $this->data = $errorData;
+        $this->data = [
+            'route' => $attackData['route'],
+            'description' => $attackData['description'],
+        ];
     }
 }

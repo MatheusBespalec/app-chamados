@@ -15,7 +15,7 @@ import { Link, usePage, useForm } from '@inertiajs/inertia-vue3';
 const params = new URLSearchParams(window.location.search)
 const filter = useForm({
     id: params.get('id'),
-    url: params.get('url'),
+    route: params.get('route'),
     from: params.get('from'),
     until: params.get('until'),
     project: params.get('project') || 0,
@@ -49,8 +49,8 @@ const breadcrumb = [
             </FormGroup>
 
             <FormGroup class="col-sm-4">
-                <Label id="url" value="Rota: " />
-                <Input id="url" @change="updateList" v-model="filter.url" />
+                <Label id="route" value="Rota: " />
+                <Input id="route" @change="updateList" v-model="filter.route" />
             </FormGroup>
 
             <FormGroup class="col-sm-6">
@@ -88,10 +88,11 @@ const breadcrumb = [
 
         <div class="row">
             <div class="col-12">
-                <Table :headers="['ID', 'Controller', 'Action', 'URI', 'Ultima Ocorrência', '']">
+                <Table :headers="['ID', 'Rota', 'Descrição', 'Ultima Ocorrência', '']">
                     <tr v-for="(attack, index) in $page.props.attacks.data" :key="index">
                         <td>{{ attack.id }}</td>
-                        <td>{{ attack.url }}</td>
+                        <td>{{ attack.route }}</td>
+                        <td>{{ attack.description }}</td>
                         <td>{{ (new Date(attack.updated_at)).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) }}</td>
                         <td>
                             <Link :href="route('attacks.show', attack.id)">

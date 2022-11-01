@@ -30,7 +30,7 @@ class MessageRepository
         ]);
     }
 
-    public function sendExternalMessage(Messageable $messageagle, ?string $text, ?UploadedFile $file): Message
+    public function saveExternalMessage(Messageable $messageagle, ?string $text, ?UploadedFile $file): Message
     {
         if ($file instanceof UploadedFile) {
             $file_name = $this->saveFile($file);

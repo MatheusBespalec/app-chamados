@@ -117,6 +117,7 @@ const breadcrumb = [
                 v-for="(message, index) in $page.props.customer.messages"
                 :key="index"
                 :text="message.text"
+                :id="message.id"
                 :file="message.file_path"
                 :color="message.user_id == $page.props.auth.user.id ? 'light' : 'secondary'"
                 :author="{ name: message.from }"
