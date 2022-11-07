@@ -10,6 +10,7 @@ import Paginate from '@/Components/Paginate'
 import Button from '@/Components/Button';
 import Table from '@/Components/Table';
 import EyeIcon from '@/Icons/EyeIcon';
+import { Inertia } from '@inertiajs/inertia';
 import { Link, usePage, useForm } from '@inertiajs/inertia-vue3';
 
 const params = new URLSearchParams(window.location.search)
@@ -79,7 +80,7 @@ const breadcrumb = [
             </FormGroup>
         </div><!-- row -->
 
-    <Button @click="resetForm" type="button" color="warning">
+    <Button @click="resetForm()" type="button" color="warning">
         Limpar Filtros
     </Button>
 

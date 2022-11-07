@@ -8,7 +8,6 @@ use App\Models\Error;
 use App\Models\Log;
 use App\Models\Project;
 use App\Repositories\MessageRepository;
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
 
 class ErrorController extends Controller

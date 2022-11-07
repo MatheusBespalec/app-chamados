@@ -27,29 +27,6 @@ const breadcrumb = [
         text: project.name
     }
 ];
-let newModuleModal
-const openNewModuleModal = () => {
-    newModuleModal.show()
-}
-
-onMounted(() => {
-    newModuleModal = new BoostrapModal(document.getElementById('new-module'));
-});
-
-const module = useForm({
-    name: '',
-    description: '',
-    project_id: project.id
-})
-
-const saveNewModule = () => {
-    module.post(route('modules.store'), {
-        onSuccess: () => {
-            module.reset();
-            newModuleModal.hide();
-        },
-    })
-}
 
 </script>
 
@@ -85,38 +62,6 @@ const saveNewModule = () => {
                 </Table>
                 <Paginate :links="$page.props.customers.links" />
             </div><!-- col-12 -->
-
-            <div class="col-12">
-                <h2>Modulos</h2>
-                <Button type="button" color="primary" @click="openNewModuleModal">Novo Módulo</Button>
-                <div class="d-flex align-content-start flex-wrap">
-                    <div v-for="(module, index) in $page.props.project.modules" :key="index" class="m-3">
-                        <SimpleCard
-                            :title="module.name"
-                            :description="module.description"
-                        />
-                    </div>
-                </div><!-- d-flex justify-content-around flex-wrap -->
-            </div>
         </div><!-- row -->
     </Content>
-
-    <Modal title="Novo Módulo" id="new-module">
-        <template v-slot:body>
-            <FormGroup>
-                <Label value="Nome" id="name" />
-                <Input v-model="module.name" id="name" :class="module.errors.name ? 'is-invalid' : ''" />
-                <div class="invalid-feedback">{{ module.errors.name }}</div>
-            </FormGroup>
-
-            <FormGroup>
-                <Label value="Descrição" id="description" />
-                <Input v-model="module.description" id="description" :class="module.errors.description ? 'is-invalid' : ''" />
-                <div class="invalid-feedback">{{ module.errors.name }}</div>
-            </FormGroup>
-        </template>
-        <template v-slot:footer>
-            <Button color="primary" @click="saveNewModule">Salvar</Button>
-        </template>
-    </Modal>
 </template>

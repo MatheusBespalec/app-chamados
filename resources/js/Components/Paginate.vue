@@ -6,6 +6,23 @@ const props = defineProps({
     links: Array,
 })
 
+
+const getPageUrl = (link) => {
+    if (link == null) {
+        return null
+    }
+
+    const url = new URL(location.href);
+    const query = url.searchParams;
+
+    const params = new URL(link);
+    const searchParams = params.searchParams;
+
+    query.set('page', searchParams.get('page') ?? null)
+
+    return url.toString();
+}
+
 </script>
 
 <template>
@@ -16,7 +33,7 @@ const props = defineProps({
                     :class="link.active ? 'active' : link.url === null ? 'disabled' : ''"
                     class="page-item"
                 >
-                    <Link class="page-link" :href="link.url" :innerHTML="link.label" preserve-scroll preserve-state></Link>
+                    <Link class="page-link" :href="getPageUrl(link.url)" :innerHTML="link.label" preserve-scroll preserve-state></Link>
                 </li>
             </template>
         </ul><!-- pagination justify-content-center -->

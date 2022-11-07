@@ -20,7 +20,6 @@ onMounted(() => {
 
 const form = useForm({
     name: undefined,
-    private_route: undefined,
     modules: []
 })
 
@@ -62,13 +61,6 @@ const sendForm = () => form.post(route('projects.store'));
                     <Label value="Nome" id="name" />
                     <Input v-model="form.name" id="name" :class="form.errors.name ? 'is-invalid' : ''" />
                     <div class="invalid-feedback">{{ form.errors.name }}</div>
-                </FormGroup>
-
-                <FormGroup>
-                    <Label value="Rota Privada" id="private_route" />
-                    <Input v-model="form.private_route" id="private_route" :class="form.errors.private_route ? 'is-invalid' : ''" />
-                    <div class="invalid-feedback">{{ form.errors.private_route }}</div>
-                    <small>*Deixe em branco caso queira usar o padrão</small>
                 </FormGroup>
 
                 <Button type="button" color="primary" @click="sendForm">Salvar</Button>

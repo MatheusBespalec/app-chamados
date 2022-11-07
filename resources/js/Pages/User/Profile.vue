@@ -20,7 +20,11 @@ import { usePage, useForm, Link } from '@inertiajs/inertia-vue3';
 const user = usePage().props.value.auth.user;
 const breadcrumb = [
     {
-        text: 'Perfil',
+        text: 'Usuários',
+        route: 'users.index'
+    },
+    {
+        text: 'Meu Perfil',
     }
 ];
 
@@ -55,36 +59,32 @@ onMounted(() => {
     <Breadcrumb :items="breadcrumb" />
 
     <Content>
-        <div class="row">
-            <div class="col-12">
-                <MainTitle title="Perfil" />
-            </div><!-- col-12 -->
+        <MainTitle title="Perfil" />
 
-            <div class="col-md-6">
-                <div role="button" :class="`position-relative overflow-hidden border border-4 border-dark rounded-circle d-flex justify-content-center align-items-center m-auto`" style="width: 150px; height: 150px">
-                    <label id="image-overlay" role="button" style="opacity: 0" class="h-100 w-100 bg-dark position-absolute d-flex justify-content-center align-items-center" for="image">
-                        <span class="text-light">Alterar Imagem</span>
-                    </label>
-                    <UserIcon v-if="profileForm.image === undefined" size="100" />
-                    <img v-if="profileForm.image !== undefined" :style="profileForm.image !== undefined ? 'none' : 'block'" id="user-image" class="w-100" :src="route('storage', { filePath: user.image })">
-                </div><!-- avatar-img me-2 -->
-                <p v-if="profileForm.errors.image" class="text-danger">{{ profileForm.errors.image }}</p>
-                <input class="d-none" type="file" id="image" @change="upImage" @input="profileForm.image = $event.target.files[0]">
+        <div class="mx-auto" style="max-width: 600px">
+            <div role="button" :class="`position-relative overflow-hidden border border-4 border-dark rounded-circle d-flex justify-content-center align-items-center m-auto`" style="width: 150px; height: 150px">
+                <label id="image-overlay" role="button" style="opacity: 0" class="h-100 w-100 bg-dark position-absolute d-flex justify-content-center align-items-center" for="image">
+                    <span class="text-light">Alterar Imagem</span>
+                </label>
+                <UserIcon v-if="profileForm.image === undefined" size="100" />
+                <img v-if="profileForm.image !== undefined" :style="profileForm.image !== undefined ? 'none' : 'block'" id="user-image" class="w-100" :src="route('storage', { filePath: user.image })">
+            </div><!-- avatar-img me-2 -->
+            <p v-if="profileForm.errors.image" class="text-danger">{{ profileForm.errors.image }}</p>
+            <input class="d-none" type="file" id="image" @change="upImage" @input="profileForm.image = $event.target.files[0]">
 
-                <FormGroup>
-                    <Label value="Nome" id="name" />
-                    <Input v-model="profileForm.name" id="name" :class="profileForm.errors.name ? 'is-invalid' : ''" />
-                    <div class="invalid-feedback">{{ profileForm.errors.name }}</div>
-                </FormGroup>
+            <FormGroup>
+                <Label value="Nome" id="name" />
+                <Input v-model="profileForm.name" id="name" :class="profileForm.errors.name ? 'is-invalid' : ''" />
+                <div class="invalid-feedback">{{ profileForm.errors.name }}</div>
+            </FormGroup>
 
-                <FormGroup>
-                    <Label value="Email" id="email" />
-                    <Input v-model="profileForm.email" id="email" :class="profileForm.errors.email ? 'is-invalid' : ''" />
-                    <div class="invalid-feedback">{{ profileForm.errors.email }}</div>
-                </FormGroup>
+            <FormGroup>
+                <Label value="Email" id="email" />
+                <Input v-model="profileForm.email" id="email" :class="profileForm.errors.email ? 'is-invalid' : ''" />
+                <div class="invalid-feedback">{{ profileForm.errors.email }}</div>
+            </FormGroup>
 
-                <Button color="primary" @click="updateProfile">Salvar</Button>
-            </div><!-- col-md-6 -->
-        </div><!-- row -->
+            <Button color="primary" @click="updateProfile">Salvar</Button>
+        </div>
     </Content>
 </template>
